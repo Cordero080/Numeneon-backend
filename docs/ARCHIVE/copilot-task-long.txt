@@ -1,0 +1,1655 @@
+## BRANCH STRUCTURE - READ FIRST
+
+Before implementing pseudocode, create TWO branches from main:
+
+1. **`team-shell-frontend` branch:**
+   - Delete the entire `backend/` folder
+   - Keep `frontend/` folder with all files
+   - Add pseudocode to frontend files as instructed below
+
+2. **`team-shell-backend` branch:**
+   - Delete the entire `frontend/` folder
+   - Keep `backend/` folder with all files
+   - Add pseudocode to backend files as instructed below
+
+These branches will be used to create separate repos in January.
+
+---
+
+Let me create ONE COMPLETE PROMPT that includes:
+
+Full context about the plan
+The validation results he already gave you
+The revised strategy (Pablo's UI stays intact)
+All the pseudocode examples and guidelines
+Team plan file instructions
+
+This needs to be self-contained and complete.
+
+COMPLETE SINGLE PROMPT FOR COPILOT (Send This)
+# NUMENEON TEAM REBUILD PLAN - Complete Implementation Guide
+
+## BACKGROUND & CONTEXT
+
+I (Pablo) built a complete working prototype of NUMENEON (formerly HUDDL), a cyberpunk-themed social media app with React + Django. Now my 5-person bootcamp team will REBUILD portions of the codebase together as a learning exercise.
+
+**Project Stack:**
+- Frontend: React 18+, Vite, React Router DOM, Vanilla CSS/SCSS
+- Backend: Django 4.x, Django REST Framework, SQLite (dev), JWT auth
+- Current state: Fully functional prototype with real API connections
+
+**Team (T-Shirt Sizing):**
+- **Pablo (XL):** UI architect, designed entire system, professional artist background
+- **Natalia (L):** Backend + Frontend, migration management
+- **Colin (M):** Team lead, backend + frontend
+- **Crystal (M):** Backend + frontend
+- **Tito (S):** Infrastructure, utilities
+
+---
+
+## THE STRATEGY (REVISED AFTER PLANNING)
+
+### Original Plan:
+Team rebuilds everything from pseudocode shells
+
+### Revised Plan (More Realistic):
+**Pablo's UI stays intact** - team rebuilds backend + state management layer
+
+**Why the change:**
+- Pablo's UI includes 75+ files with sophisticated animations (scan lines, 3D flips, glassmorphic effects)
+- Even Pablo used AI tools to orchestrate this visual complexity
+- Expecting bootcamp students to replicate sophisticated styling from pseudocode = unrealistic
+- Learning value is in architecture, backend, state management - not replicating artist-level UI work
+
+---
+
+## FILE VALIDATION (You Already Completed This)
+
+You previously validated file assignments and confirmed:
+- ✅ 148 files validated - almost all paths correct
+- ❌ 1 incorrect path - `backend/users/admin.py` doesn't exist (removed)
+- 📝 7 missing files added - 5 `index.js` for Pablo, 2 `__init__.py` for Natalia
+- 🤝 ~27 shared/config files identified as "do not touch"
+
+**Your validation is approved - proceeding with implementation.**
+
+---
+
+## FILE CATEGORIES & ASSIGNMENTS
+
+### CATEGORY 1: KEEP INTACT (Pablo's UI - Add Usage Comments Only)
+
+**All of Pablo's component files (~75 files):**
+
+**Layout Components:**
+- `frontend/src/App.jsx`
+- All files in `frontend/src/components/layout/TopBar/` (including MessageModal with 8 SCSS partials)
+- All files in `frontend/src/components/layout/SideNav/`
+
+**Home Page System:**
+- All files in `frontend/src/components/pages/Home/` including:
+  - `Home.jsx`, `Home.scss`, `index.js`
+  - `utils/groupPosts.js`
+  - `components/DeleteConfirmModal/` (all files)
+  - `components/MediaLightbox/` (all files + 7 SCSS partials)
+  - `components/TimelineRiverFeed/` (all files)
+  - `components/TimelineRiverRow/` (all files + 11 SCSS partials)
+
+**Profile Page System:**
+- All files in `frontend/src/components/pages/Profile/` including:
+  - `Profile.jsx`, `Profile.scss`, `index.js`
+  - `components/ComposerModal/` (all files)
+  - `components/ProfileCard/` (all files + 5 subcomponents)
+  - `components/TimelineRiver/` (all files)
+
+**Other Pages:**
+- `frontend/src/components/pages/About/` (all files including `index.js`)
+- `frontend/src/components/pages/Landing/` (all files including `index.js`)
+- `frontend/src/components/pages/NotFound/` (all files including `index.js`)
+
+**Contexts:**
+- `frontend/src/contexts/MessageContext.jsx`
+
+**Assets:**
+- `frontend/src/assets/huddl-logo.svg`
+
+**Global Design System (DO NOT TOUCH - 13 files):**
+- All files in `frontend/src/styles/` (main.scss, _variables.scss, _mixins.scss, etc.)
+
+**What to do with these files:**
+- Keep implementation 100% intact
+- Add brief USAGE comment block at top explaining:
+  - What the component does
+  - What props/context it expects
+  - What data format it needs
+  - Integration points
+- Mark as "DO NOT MODIFY"
+
+---
+
+### CATEGORY 2: ADD FULL PSEUDOCODE (Team Rebuilds These)
+
+**NATALIA (L - 21 files total):**
+
+**Backend (11 files):**
+- `backend/users/models.py`
+- `backend/users/views.py`
+- `backend/users/serializers.py`
+- `backend/users/urls.py`
+- `backend/users/apps.py`
+- `backend/users/__init__.py`
+- `backend/users/management/__init__.py`
+- `backend/users/management/commands/__init__.py`
+- `backend/users/management/commands/create_test_user.py`
+- `backend/users/migrations/0001_initial.py`
+- `backend/users/migrations/__init__.py`
+
+**Frontend (10 files):**
+- `frontend/src/contexts/AuthContext.jsx`
+- `frontend/src/components/pages/Login/Login.jsx`
+- `frontend/src/components/pages/Login/Login.scss`
+- `frontend/src/components/pages/Login/index.js`
+- `frontend/src/components/pages/Signup/Signup.jsx`
+- `frontend/src/components/pages/Signup/Signup.scss`
+- `frontend/src/components/pages/Signup/index.js`
+- `frontend/src/components/ui/ProtectedRoute.jsx`
+
+**Special Responsibility:** Migration management (reviews/runs all migrations)
+
+---
+
+**COLIN (M - 9 files total):**
+
+**Backend (7 files):**
+- `backend/posts/models.py`
+- `backend/posts/views.py`
+- `backend/posts/serializers.py`
+- `backend/posts/urls.py`
+- `backend/posts/apps.py`
+- `backend/posts/__init__.py`
+- `backend/posts/admin.py`
+
+**Frontend (2 files):**
+- `frontend/src/contexts/PostsContext.jsx`
+- `frontend/src/services/postsService.js`
+
+---
+
+**CRYSTAL (M - 12 files total):**
+
+**Backend (7 files):**
+- `backend/friends/models.py`
+- `backend/friends/views.py`
+- `backend/friends/serializers.py`
+- `backend/friends/urls.py`
+- `backend/friends/apps.py`
+- `backend/friends/__init__.py`
+- `backend/friends/admin.py`
+
+**Frontend (5 files):**
+- `frontend/src/contexts/FriendsContext.jsx`
+- `frontend/src/services/friendsService.js`
+- `frontend/src/components/pages/Friends/Friends.jsx`
+- `frontend/src/components/pages/Friends/Friends.scss`
+- `frontend/src/components/pages/Friends/index.js`
+
+---
+
+**TITO (S - 6 files total):**
+- `frontend/src/main.jsx`
+- `frontend/src/services/apiClient.js`
+- `frontend/src/contexts/ThemeContext.jsx`
+- `frontend/src/components/ui/ThemeToggle/ThemeToggle.jsx`
+- `frontend/src/components/ui/ThemeToggle/ThemeToggle.scss`
+- `frontend/src/components/ui/ThemeToggle/index.js`
+
+---
+
+### CATEGORY 3: COLLABORATIVE FILES (Multiple Owners Add Content)
+
+**Backend:**
+- `backend/huddl/urls.py` - Each backend person adds their `include()` line
+
+**Frontend:**
+- `frontend/src/contexts/index.js` - Each context owner adds their export
+
+**What to do:**
+- Add TODO comments showing where each person adds their code
+- Show examples of what to add
+
+---
+
+### CATEGORY 4: SHARED FILES (~27 files - DO NOT TOUCH)
+
+**Backend Config:**
+- `backend/manage.py`, `backend/db.sqlite3`, `backend/seed_posts.py`
+- `backend/huddl/__init__.py`, `backend/huddl/asgi.py`, `backend/huddl/wsgi.py`
+- `backend/huddl/settings.py`
+- All `__init__.py` in migrations folders (except ones assigned to Natalia)
+
+**Frontend Config:**
+- `frontend/eslint.config.js`, `frontend/vite.config.js`, `frontend/package.json`, `frontend/index.html`
+
+**Global Styles:**
+- All 13 files in `frontend/src/styles/` (pre-implemented design system)
+
+---
+
+## PSEUDOCODE STYLE GUIDELINES
+
+### Core Principle: "What + Why, Not How"
+
+Every pseudocode TODO should:
+1. State WHAT to build (the functionality)
+2. Explain WHY it matters (integration context)
+3. Show EXPECTED OUTPUT (data format for integration)
+4. Give LEARNING PROMPTS ("Think about...")
+5. NOT dictate HOW (they figure out implementation)
+
+### Pseudocode Template:
+```javascript
+// TODO: [What to build]
+// 
+// [Why it matters / how it fits in the app]
+//
+// [Expected input/output format if relevant]
+//
+// Think about:
+// - [Question that makes them reason about edge cases]
+// - [Question about design decisions]
+//
+// Hint: [Gentle nudge toward React/Django feature, NOT exact code]
+```
+
+---
+
+## DETAILED EXAMPLES BY FILE TYPE
+
+### Example 1: Backend Model File
+```python
+"""
+TODO: Create the Post model - this is the core content type for NUMENEON
+
+A post is something a user creates. It can be:
+- A 'thought' (text-only, goes in left column of Timeline River)
+- A 'media' post (has an image, goes in center column)
+- A 'milestone' (achievement post, goes in right column)
+
+Posts can also be replies to other posts (nested conversations/threads).
+
+Fields you need:
+- author: Who created it? (relationship to User model)
+- type: What kind of post? (must be one of: 'thought', 'media', 'milestone')
+- content: The actual text (can be blank for media-only posts)
+- image: Optional image file
+- parent: Is this a reply to another post? (can be null)
+- created_at: When was it made? (should auto-set on creation)
+
+Integration points:
+- Frontend TimelineRiverFeed (Pablo's component) expects posts with these exact fields
+- PostsContext (Colin builds this too) will fetch and manage these
+- Each post type renders in different column of Pablo's Timeline River UI
+
+Think about:
+- How do you make a field optional vs required in Django?
+- How do you create a relationship where a Post can reply to another Post?
+- What's the difference between blank=True and null=True?
+- For the 'type' field, how do you restrict it to only 3 specific values?
+- Why would image need both blank=True AND null=True?
+
+Hint: Django has a built-in User model you can import from django.contrib.auth.models
+Hint: For the 'type' field, look up Django's 'choices' parameter
+Hint: For self-referential relationships (parent post), use ForeignKey('self', ...)
+Hint: For created_at, look up auto_now_add parameter
+"""
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class Post(models.Model):
+    # Your code here
+    pass
+```
+
+---
+
+### Example 2: Backend View File
+```python
+"""
+TODO: Create Posts API Views - handles all HTTP requests for posts
+
+This file contains the views that respond to frontend API calls.
+Your PostViewSet should handle:
+- GET /api/posts/ - List all posts
+- POST /api/posts/ - Create new post
+- GET /api/posts/:id/ - Get single post
+- PATCH /api/posts/:id/ - Update post
+- DELETE /api/posts/:id/ - Delete post
+- GET /api/posts/:id/replies/ - Get all replies to a post
+
+Integration points:
+- Frontend postsService.js (Colin builds this too) calls these endpoints
+- PostsContext uses the service to manage state
+- Pablo's Timeline components display the returned data
+
+Expected response format for GET /api/posts/:
+[
+  {
+    "id": 1,
+    "author": {
+      "id": 5,
+      "username": "alice",
+      "profile_picture": "url..."
+    },
+    "type": "thought",
+    "content": "This is a post",
+    "image": null,
+    "parent": null,
+    "created_at": "2024-12-19T10:00:00Z"
+  }
+]
+
+Think about:
+- How do you restrict endpoints to authenticated users only?
+- Should you use APIView, ViewSet, or ModelViewSet? (Hint: ModelViewSet is easiest)
+- How do you include nested author data (not just author ID)?
+- For the /replies/ endpoint, how do you filter posts by parent ID?
+- What HTTP methods should be allowed? (GET, POST, PATCH, DELETE)
+
+Hint: Django REST Framework's ModelViewSet gives you CRUD for free
+Hint: Use serializers to format the response (you'll build serializers.py next)
+Hint: For nested author data, your serializer needs a nested UserSerializer
+Hint: Look up @action decorator for custom endpoints like /replies/
+"""
+
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from .models import Post
+from .serializers import PostSerializer
+
+class PostViewSet(viewsets.ModelViewSet):
+    # Your code here
+    pass
+```
+
+---
+
+### Example 3: Frontend Context File
+```javascript
+// TODO: Create PostsContext - manages all post data for the app
+//
+// This context is the "source of truth" for posts. Any component that needs
+// to display posts (Home, Profile) or create/edit/delete posts (ComposerModal)
+// gets data from here.
+//
+// State you need:
+// - posts: Array of post objects from the API
+// - loading: Boolean - are we fetching data?
+// - error: String - any error messages from API calls
+//
+// Functions you need to provide:
+// - fetchPosts(): Get all posts from /api/posts/ and store them
+// - createPost(postData): Send new post to API, add to local state
+// - updatePost(id, updates): Edit existing post
+// - deletePost(id): Remove post from API and local state
+// - getReplies(parentId): Get all replies to a specific post
+//
+// Integration points:
+// - Uses postsService.js (you're building this too) for actual API calls
+// - Wraps App.jsx so all routes can access posts
+// - Pablo's Home.jsx and Profile.jsx consume this to display posts
+// - Pablo's ComposerModal uses createPost() when user submits
+// - Pablo's TimelineRiverFeed expects posts array in specific format
+//
+// Post object format (from backend):
+// {
+//   id: number,
+//   author: { id: number, username: string, profile_picture: string },
+//   type: 'thought' | 'media' | 'milestone',
+//   content: string,
+//   image: string | null,
+//   created_at: ISO timestamp string,
+//   parent: number | null
+// }
+//
+// Think about:
+// - How do you update state after a successful API call?
+// - What happens if the API call fails? Should error state be set?
+// - Should you refetch all posts after creating one, or just add new post to array?
+// - When should fetchPosts() run? (Hint: useEffect on component mount)
+// - How do you provide this state to all child components?
+// - Should posts be sorted? (By date? Newest first?)
+//
+// Hint: Use createContext() to create the context
+// Hint: Create a custom hook like useAuth() that components can use
+// Hint: Look at AuthContext.jsx (Natalia builds) as a reference for structure
+// Hint: For async operations, use async/await for cleaner code
+
+import { createContext, useState, useEffect, useContext } from 'react';
+import * as postsService from '../services/postsService';
+
+export const PostsContext = createContext();
+
+export function PostsProvider({ children }) {
+  // Your code here
+}
+
+export function usePosts() {
+  // Your code here - custom hook to consume context
+}
+```
+
+---
+
+### Example 4: Frontend Service File
+```javascript
+// TODO: Create Posts Service - handles all API calls related to posts
+//
+// This file contains functions that make HTTP requests to the backend posts API.
+// It's the bridge between PostsContext (state management) and the Django backend.
+//
+// Functions you need:
+// - getPosts(): Fetch all posts from GET /api/posts/
+// - getPost(id): Fetch single post from GET /api/posts/:id/
+// - getReplies(parentId): Fetch replies from GET /api/posts/:id/replies/
+// - createPost(postData): Create new post via POST /api/posts/
+// - updatePost(id, updates): Update post via PATCH /api/posts/:id/
+// - deletePost(id): Delete post via DELETE /api/posts/:id/
+//
+// Integration points:
+// - Uses apiClient.js (Tito builds this) for axios instance with JWT auth
+// - PostsContext (you're building this too) calls these functions
+// - All functions should return the response data, not the full axios response
+//
+// Expected input for createPost():
+// {
+//   type: 'thought' | 'media' | 'milestone',
+//   content: string,
+//   image: File | null (for media posts),
+//   parent: number | null (for replies)
+// }
+//
+// Expected return format (matches backend response):
+// Single post: { id, author: {...}, type, content, image, parent, created_at }
+// Multiple posts: [ {...}, {...}, ... ]
+//
+// Think about:
+// - Do you need to handle auth tokens? (No! apiClient handles that)
+// - Should these functions handle errors or throw them? (Throw them, let context handle)
+// - For image uploads, how should data be formatted? (FormData for multipart/form-data)
+// - Should you validate input before sending to API?
+// - What if the API returns an error? (Let it throw, context will catch)
+//
+// Hint: Import apiClient and use apiClient.get(), apiClient.post(), etc.
+// Hint: Use async/await for cleaner promise handling
+// Hint: Return response.data, not the whole response object
+// Hint: For image uploads, create FormData and append fields
+
+import apiClient from './apiClient';
+
+export async function getPosts() {
+  // Your code here
+}
+
+export async function createPost(postData) {
+  // Your code here
+}
+
+export async function updatePost(id, updates) {
+  // Your code here
+}
+
+export async function deletePost(id) {
+  // Your code here
+}
+
+export async function getReplies(parentId) {
+  // Your code here
+}
+```
+
+---
+
+### Example 5: Simple Frontend Component (JSX)
+```javascript
+// TODO: Create Login component - user authentication form
+//
+// This is where existing users sign in to NUMENEON.
+//
+// Component should:
+// 1. Display a form with username/email and password fields
+// 2. Call AuthContext.login() when user submits
+// 3. Redirect to /home on successful login
+// 4. Display error messages if login fails (wrong password, network error, etc.)
+//
+// State you need:
+// - formData: Object with username and password fields
+// - Or separate username and password state (your choice)
+//
+// Integration points:
+// - Uses AuthContext's login() function (Natalia builds AuthContext)
+// - Uses React Router's useNavigate for redirect after login
+// - Links to Signup page (/signup) for new users
+// - Uses Pablo's design system for styling (glass-card mixin, variables)
+//
+// User flow:
+// 1. User types username and password
+// 2. User clicks submit button
+// 3. Component calls AuthContext.login({ username, password })
+// 4. If successful, navigate to /home
+// 5. If failed, show error message from AuthContext
+//
+// Think about:
+// - How do you handle form input changes? (controlled inputs with onChange)
+// - What happens when user clicks submit? (preventDefault to stop page refresh!)
+// - When should you navigate to /home? (after successful login, in useEffect?)
+// - How do you show loading state while waiting for API response?
+// - Should error message clear when user starts typing again? (better UX)
+// - How do you access AuthContext? (useAuth hook)
+//
+// STYLING:
+// - Import './Login.scss' for component-specific styles
+// - Pablo's global design system has variables and mixins you can use
+// - Check src/styles/_variables.scss for color/spacing variables
+// - Check src/styles/_mixins.scss for glass-card, neon-glow, etc.
+// - You'll write Login.scss (separate pseudocode for that file)
+//
+// Hint: Use async/await for the login call
+// Hint: Store username/password in a single formData object for cleaner code
+// Hint: useNavigate() hook from react-router-dom for programmatic navigation
+// Hint: Look at Signup.jsx structure (you'll build that too) - similar pattern
+
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import './Login.scss';
+
+export default function Login() {
+  // Your code here
+}
+```
+
+---
+
+### Example 6: Simple Component SCSS File
+```scss
+// TODO: Style the Login page
+//
+// IMPORTANT: Pablo's design system is already built!
+// - Variables: Use var(--color-primary), var(--spacing-lg), etc.
+//   Check src/styles/_variables.scss to see all available variables
+// - Mixins: Use @include glass-card, @include neon-glow, etc.
+//   Check src/styles/_mixins.scss to see all available mixins
+// - Buttons: Classes already exist in _buttons.scss (btn-primary, btn-secondary)
+// - Theme: Light/dark mode variables handled automatically
+//
+// What you need to style:
+// - .login-container: Main page wrapper (full viewport height, centered)
+// - .login-form: Form container (use glass-card mixin for cyberpunk look)
+// - .form-group: Individual input groups (spacing between fields)
+// - .error-message: Error display styling (use color-danger variable)
+// - .link-text: Link to signup page (subtle styling)
+//
+// Layout requirements:
+// - Center the form on the page (vertically and horizontally)
+// - Use consistent spacing from Pablo's spacing variables
+// - Form should be responsive (look good on mobile AND desktop)
+// - Don't override button styles - they're styled globally already
+//
+// Think about:
+// - How do you center content both vertically and horizontally? (flexbox)
+// - Should inputs have focus states? (yes! use neon-glow mixin on :focus)
+// - What color should error messages be? (check variables for --color-danger)
+// - How wide should the form be? (max-width for desktop, full-width on mobile)
+// - Should the background be the page-level background or custom?
+//
+// Example of using Pablo's design system:
+// .login-form {
+//   background: var(--color-bg-secondary);
+//   padding: var(--spacing-xl);
+//   @include glass-card;
+//   @include neon-glow;
+// }
+//
+// Responsive example:
+// @media (max-width: 768px) {
+//   .login-container {
+//     padding: var(--spacing-md);
+//   }
+// }
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.login-container {
+  // Your code here
+}
+
+.login-form {
+  // Your code here
+}
+
+.form-group {
+  // Your code here
+}
+
+.error-message {
+  // Your code here
+}
+
+.link-text {
+  // Your code here
+}
+```
+
+---
+
+### Example 7: Utility Function File
+```javascript
+// TODO: Create groupPosts utility - organizes posts by user and date for Timeline River
+//
+// This function takes a flat array of posts from the API and transforms it into
+// a nested structure that Pablo's TimelineRiverFeed component expects.
+//
+// Input format (array of posts from API):
+// [
+//   { id: 1, author: { id: 5, username: "alice" }, created_at: "2024-12-19T10:00:00Z", type: "thought", ... },
+//   { id: 2, author: { id: 5, username: "alice" }, created_at: "2024-12-19T14:00:00Z", type: "media", ... },
+//   { id: 3, author: { id: 7, username: "bob" }, created_at: "2024-12-18T09:00:00Z", type: "thought", ... }
+// ]
+//
+// Expected output format (nested object grouped by author.id, then date):
+// {
+//   "5": {                                    // Grouped by author.id first
+//     "2024-12-19": [post1, post2],          // Then grouped by date string
+//     "2024-12-18": []
+//   },
+//   "7": {
+//     "2024-12-18": [post3]
+//   }
+// }
+//
+// Integration points:
+// - Called by Pablo's TimelineRiverFeed component
+// - Input comes from PostsContext (array of posts)
+// - Output feeds TimelineRiverRow components (one row per user/date combo)
+//
+// Think about:
+// - How do you extract just the date from an ISO timestamp like "2024-12-19T10:00:00Z"?
+// - How do you build a nested object structure from a flat array? (reduce? forEach?)
+// - What if two posts have the same author and date? (should be in same array)
+// - Should posts be sorted by time within each date group? (probably yes, newest first)
+// - What if posts array is empty? (return empty object {})
+// - What if a post doesn't have an author? (shouldn't happen, but handle it)
+//
+// Hint: Use .reduce() to build the grouped object
+// Hint: For date extraction, String.split('T')[0] works, or use new Date()
+// Hint: Check if author.id exists as key, if not create it
+// Hint: Check if date exists under that author, if not create it
+// Hint: Initialize as empty array before pushing posts
+//
+// Example reduce pattern:
+// const result = posts.reduce((acc, post) => {
+//   // extract userId and date
+//   // build nested structure
+//   return acc;
+// }, {});
+
+export function groupPosts(posts) {
+  // Your code here
+}
+```
+
+---
+
+### Example 8: Simple Export File (index.js)
+```javascript
+// TODO: Export the Login component
+//
+// This is a barrel export that makes imports cleaner elsewhere in the app.
+//
+// Without this file:
+// import Login from './Login/Login.jsx'
+//
+// With this file:
+// import Login from './Login'
+//
+// Why? It's a common React pattern that keeps import paths shorter and cleaner.
+//
+// Just export the default export from Login.jsx
+
+export { default } from './Login';
+```
+
+---
+
+### Example 9: Collaborative File (Backend URLs)
+```python
+"""
+TODO: Root URL configuration for NUMENEON backend
+
+This file imports and includes all the app-specific URL patterns.
+Each backend team member adds their app's URLs here.
+
+COLLABORATIVE FILE - Each person adds ONE line:
+- Natalia: Users/auth URLs
+- Colin: Posts URLs
+- Crystal: Friends URLs
+
+Pattern: path('api/[app-name]/', include('[app-name].urls'))
+"""
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    
+    # TODO (Natalia): Add users app URLs
+    # Uncomment and complete this line:
+    # path('api/auth/', include('users.urls')),
+    
+    # TODO (Colin): Add posts app URLs
+    # Uncomment and complete this line:
+    # path('api/posts/', include('posts.urls')),
+    
+    # TODO (Crystal): Add friends app URLs
+    # Uncomment and complete this line:
+    # path('api/friends/', include('friends.urls')),
+]
+```
+
+---
+
+### Example 10: Collaborative File (Frontend Context Exports)
+```javascript
+// TODO: Export all context providers and hooks
+//
+// This file makes it easy to import multiple contexts in one line.
+//
+// COLLABORATIVE FILE - Each context owner adds their exports:
+// - Natalia: AuthContext, useAuth
+// - Colin: PostsContext, usePosts
+// - Crystal: FriendsContext, useFriends
+// - Tito: ThemeContext, useTheme
+// - Pablo: MessageContext, useMessage
+//
+// Usage elsewhere:
+// import { useAuth, usePosts, useFriends } from '../contexts'
+
+// TODO (Natalia): Export AuthContext
+// Uncomment and complete this line:
+// export { AuthProvider, useAuth } from './AuthContext';
+
+// TODO (Colin): Export PostsContext
+// Uncomment and complete this line:
+// export { PostsProvider, usePosts } from './PostsContext';
+
+// TODO (Crystal): Export FriendsContext
+// Uncomment and complete this line:
+// export { FriendsProvider, useFriends } from './FriendsContext';
+
+// TODO (Tito): Export ThemeContext
+// Uncomment and complete this line:
+// export { ThemeProvider, useTheme } from './ThemeContext';
+
+// TODO (Pablo): Export MessageContext
+// Already built - uncomment this line:
+// export { MessageProvider, useMessage } from './MessageContext';
+```
+
+---
+
+### Example 11: Pablo's Component (Usage Comment Only)
+```javascript
+/**
+ * COMPONENT USAGE (For Team Reference)
+ * 
+ * Purpose: Main feed component that displays posts in a 3-column "river" layout
+ * - Left column: 'thought' posts (text-only)
+ * - Center column: 'media' posts (with images)
+ * - Right column: 'milestone' posts (achievements)
+ * 
+ * Data Requirements:
+ * - Consumes: PostsContext via usePosts() hook
+ * - Expects: posts array from context
+ * - Uses: groupPosts utility (Pablo's utility) to organize posts by user+date
+ * 
+ * Post Format Expected (from backend):
+ * {
+ *   id: number,
+ *   author: { id: number, username: string, profile_picture: string },
+ *   type: 'thought' | 'media' | 'milestone',
+ *   content: string,
+ *   image: string | null,
+ *   created_at: ISO timestamp string (e.g., "2024-12-19T10:00:00Z"),
+ *   parent: number | null
+ * }
+ * 
+ * Integration Points:
+ * - Used by: Home.jsx (Pablo's page component)
+ * - Renders: TimelineRiverRow components (Pablo's component) for each user/date group
+ * - Calls: PostsContext.fetchPosts() on component mount
+ * 
+ * Team Integration:
+ * - Colin: Build PostsContext to provide the posts array in above format
+ * - Colin: Build postsService to fetch from /api/posts/
+ * - Colin: Ensure backend /api/posts/ returns posts matching above format
+ * - Natalia: Ensure author data includes id, username, profile_picture
+ * 
+ * DO NOT MODIFY THIS FILE
+ * This is Pablo's complete UI implementation. Your job is to build the
+ * backend and contexts that provide data in the format this component expects.
+ */
+
+import { usePosts } from '../../../contexts/PostsContext';
+import { groupPosts } from '../utils/groupPosts';
+import TimelineRiverRow from './TimelineRiverRow';
+import './TimelineRiverFeed.scss';
+
+// ... Pablo's complete implementation follows (DO NOT MODIFY) ...
+```
+
+---
+
+## TEAM PLAN MARKDOWN FILES
+
+Create `team-plan/` folder in project root with 6 markdown files:
+
+### Files to Create:
+1. `team-plan/natalia.md`
+2. `team-plan/colin.md`
+3. `team-plan/crystal.md`
+4. `team-plan/pablo.md`
+5. `team-plan/tito.md`
+6. `team-plan/team-structure.md`
+
+---
+
+### Template for Individual Member Files:
+```markdown
+# [Name]'s Tasks (Size: [XL/L/M/S])
+
+## Your Mission
+[2-3 sentences in plain language explaining what they're building and why it matters to NUMENEON]
+
+## Files You Own
+**Important:** Don't touch anyone else's files to avoid merge conflicts!
+
+### Backend Files ([count] total)
+- `path/to/file1.py` - Brief description
+- `path/to/file2.py` - Brief description
+[List ALL their backend files]
+
+### Frontend Files ([count] total)
+- `path/to/file1.jsx` - Brief description
+- `path/to/file2.scss` - Brief description
+[List ALL their frontend files]
+
+---
+
+## Task Breakdown
+
+### ✅ Task 1: [Task Name]
+**Files:** `path/to/file.ext`, `path/to/another.ext`
+
+**What:** [What are they building in this task?]
+
+**Why:** [Why does this matter to the app?]
+
+**Acceptance Criteria:**
+- [ ] [Concrete, testable criterion 1]
+- [ ] [Concrete, testable criterion 2]
+- [ ] [Concrete, testable criterion 3]
+
+**Think about:** [1-2 learning prompts that make them reason about edge cases]
+
+**Helpful Resources:** [Optional: Django/React docs link, or "Look at [OtherFile] for similar pattern"]
+
+---
+
+[Repeat Task format for each major feature/grouping]
+
+---
+
+## Integration Points
+
+**You provide:**
+- [What you're building that others depend on]
+
+**You consume:**
+- [What others build that you depend on]
+
+**Work with:**
+- [Which team members you'll interact with most]
+```
+
+---
+
+### Example: natalia.md (Complete)
+```markdown
+# Natalia's Tasks (Size: L)
+
+## Your Mission
+You're building the authentication system - the foundation that lets users create accounts, log in, and access protected features. You're also managing all database migrations to keep the team's database healthy as everyone builds.
+
+## Files You Own
+**Important:** Don't touch anyone else's files to avoid merge conflicts!
+
+### Backend Files (11 total)
+- `backend/users/models.py` - User profile data structure
+- `backend/users/views.py` - Signup, login, logout API endpoints
+- `backend/users/serializers.py` - User data validation and formatting
+- `backend/users/urls.py` - Auth API routes configuration
+- `backend/users/apps.py` - Django app configuration
+- `backend/users/__init__.py` - Package marker
+- `backend/users/management/__init__.py` - Management commands package
+- `backend/users/management/commands/__init__.py` - Commands subpackage
+- `backend/users/management/commands/create_test_user.py` - Test user creation script
+- `backend/users/migrations/0001_initial.py` - Initial database schema
+- `backend/users/migrations/__init__.py` - Migrations package marker
+
+### Frontend Files (10 total)
+- `frontend/src/contexts/AuthContext.jsx` - Auth state management (user, login, logout, signup)
+- `frontend/src/components/pages/Login/Login.jsx` - Login form component
+- `frontend/src/components/pages/Login/Login.scss` - Login page styling
+- `frontend/src/components/pages/Login/index.js` - Component export
+- `frontend/src/components/pages/Signup/Signup.jsx` - Registration form component
+- `frontend/src/components/pages/Signup/Signup.scss` - Signup page styling
+- `frontend/src/components/pages/Signup/index.js` - Component export
+- `frontend/src/components/ui/ProtectedRoute.jsx` - Route guard for authenticated pages
+
+### Special Responsibility
+**Migration Management:** You review and run ALL database migrations (yours, Colin's, Crystal's)
+
+---
+
+## Task Breakdown
+
+### ✅ Task 1: Create User Profile Model
+**Files:** `backend/users/models.py`
+
+**What:** Define the database structure for user profiles (extending Django's built-in User model)
+
+**Why:** Every social media app needs to store info about users - username, email, password, profile picture, bio, etc.
+
+**Acceptance Criteria:**
+- [ ] Profile model created (extends or relates to Django's User model)
+- [ ] User has profile_picture field (optional image)
+- [ ] User has bio field (optional text)
+- [ ] Passwords are automatically hashed (Django handles this with built-in User)
+- [ ] Model appears in Django admin
+
+**Think about:**
+- What's the difference between extending AbstractUser vs creating a Profile with OneToOne to User?
+- Should every field be required, or can some be optional?
+- How do you handle file uploads for profile pictures?
+
+**Helpful Resources:** Django docs on extending the User model
+
+---
+
+### ✅ Task 2: Build Authentication Views & Serializers
+**Files:** `backend/users/views.py`, `backend/users/serializers.py`
+
+**What:** Create API endpoints for signup, login, and getting current user info
+
+**Why:** Frontend needs to send credentials and receive JWT tokens to maintain logged-in state
+
+**Acceptance Criteria:**
+- [ ] POST /api/auth/signup/ creates new user and returns JWT token
+- [ ] POST /api/auth/login/ validates credentials and returns JWT token
+- [ ] GET /api/auth/me/ returns current logged-in user's data
+- [ ] Invalid credentials return proper 400/401 error messages
+- [ ] UserSerializer and ProfileSerializer format user data correctly
+
+**Think about:**
+- How do you validate that email isn't already taken?
+- Where do JWT tokens come from? (Hint: Django settings has JWT package configured)
+- What user data should /me/ return? (Use serializer to control this)
+- Should passwords be returned in API responses? (NO!)
+
+**Helpful Resources:** Django REST Framework docs on ViewSets and Serializers
+
+---
+
+### ✅ Task 3: Configure Auth Routes
+**Files:** `backend/users/urls.py`, `backend/huddl/urls.py` (collaborative)
+
+**What:** Set up URL routing for auth endpoints
+
+**Why:** Frontend needs to know where to send API requests
+
+**Acceptance Criteria:**
+- [ ] /api/auth/signup/ route configured
+- [ ] /api/auth/login/ route configured
+- [ ] /api/auth/me/ route configured
+- [ ] Routes added to main urls.py via include()
+
+**Think about:**
+- Do you need Django REST Framework's routers, or simple path() calls?
+- How do you connect app URLs to main project URLs?
+
+---
+
+### ✅ Task 4: Create AuthContext State Management
+**Files:** `frontend/src/contexts/AuthContext.jsx`
+
+**What:** React context that manages user login state and provides auth functions to all components
+
+**Why:** Components like Login, Signup, ProtectedRoute, TopBar all need to know if user is logged in
+
+**Acceptance Criteria:**
+- [ ] Provides `user` state (current user object or null)
+- [ ] Provides `login(credentials)` function that calls backend and stores token
+- [ ] Provides `signup(userData)` function that creates account and stores token
+- [ ] Provides `logout()` function that clears token and user state
+- [ ] JWT token stored in localStorage
+- [ ] On app mount, checks localStorage for token and fetches current user
+- [ ] Custom `useAuth()` hook for easy access
+- [ ] Context added to export in contexts/index.js
+
+**Think about:**
+- When should you check if user is already logged in? (useEffect on mount)
+- Where should JWT tokens be stored? (localStorage persists across sessions)
+- What happens when token expires? (API returns 401, logout user)
+- Should you store user object in localStorage too, or just token?
+
+**Helpful Resources:** Look at PostsContext.jsx (Colin) for similar pattern
+
+---
+
+### ✅ Task 5: Build Login & Signup UI
+**Files:**
+- `frontend/src/components/pages/Login/Login.jsx` + `Login.scss`
+- `frontend/src/components/pages/Signup/Signup.jsx` + `Signup.scss`
+- `frontend/src/components/pages/Login/index.js`
+- `frontend/src/components/pages/Signup/index.js`
+
+**What:** Forms for users to log in or create accounts with NUMENEON styling
+
+**Why:** Users need a beautiful, functional way to access the app
+
+**Acceptance Criteria:**
+- [ ] Login form has username/email and password fields
+- [ ] Signup form has username, email, password, confirm password fields
+- [ ] Forms call AuthContext.login() or AuthContext.signup() on submit
+- [ ] Successful login/signup redirects to /home
+- [ ] Errors display clearly (wrong password, email taken, network errors)
+- [ ] Forms use Pablo's design system (glass-card mixin, color variables, spacing)
+- [ ] Mobile responsive
+- [ ] index.js files export components correctly
+
+**Think about:**
+- How do you prevent form submission from refreshing the page? (preventDefault!)
+- Should passwords be visible or hidden? (type="password")
+- What if passwords don't match on signup? (validate before submission)
+- Should error clear when user starts typing again? (better UX - yes)
+
+**Styling Notes:**
+- Use `@include glass-card` for form container
+- Use Pablo's color variables: var(--color-primary), var(--color-danger)
+- Use Pablo's spacing: var(--spacing-md), var(--spacing-lg)
+- Check `src/styles/_mixins.scss` for available mixins
+- Check `src/styles/_variables.scss` for available variables
+
+---
+
+### ✅ Task 6: Create ProtectedRoute Component
+**Files:** `frontend/src/components/ui/ProtectedRoute.jsx`
+
+**What:** Route wrapper that redirects to /login if user isn't authenticated
+
+**Why:** Pages like /home, /profile shouldn't be accessible without logging in
+
+**Acceptance Criteria:**
+- [ ] Checks if user is logged in via AuthContext
+- [ ] If logged in, renders the requested page/component
+- [ ] If not logged in, redirects to /login
+- [ ] Used in App.jsx to wrap protected routes
+
+**Think about:**
+- How do you access AuthContext from this component? (useAuth hook)
+- How do you redirect in React Router v6? (Navigate component or useNavigate hook)
+- Should there be a loading state while checking auth? (probably yes)
+
+---
+
+## Migration Management Responsibility
+
+You're the team's migration manager. This means:
+
+### Your Duties:
+1. **Create your migrations:** `python manage.py makemigrations users`
+2. **Review Colin's migrations:** Check `backend/posts/migrations/` before running
+3. **Review Crystal's migrations:** Check `backend/friends/migrations/` before running
+4. **Run all migrations:** `python manage.py migrate` (regularly as team works)
+5. **Handle conflicts:** If migrations conflict, help team resolve them
+
+### When to Run Migrations:
+- After you create/modify any models in users app
+- After Colin creates/modifies models in posts app
+- After Crystal creates/modifies models in friends app
+- Before seeding test data (`python manage.py seed_posts.py`)
+- Before team demos/presentations
+
+### Helpful Commands:
+- `python manage.py showmigrations` - Shows status of all migrations
+- `python manage.py makemigrations` - Creates new migrations
+- `python manage.py migrate` - Applies migrations to database
+- `python manage.py migrate --fake [app] [migration]` - Mark migration as applied without running (advanced)
+
+---
+
+## Integration Points
+
+**You provide:**
+- **AuthContext** → Used by everyone (Login, Signup, TopBar, ProtectedRoute, etc.)
+- **User authentication** → Enables protected routes and personalized features
+- **User model/API** → Other apps reference User via ForeignKey (posts.author, etc.)
+
+**You consume:**
+- **Pablo's design system** → Use variables/mixins for Login/Signup styling
+- **Tito's apiClient.js** → Make API calls (apiClient handles JWT headers automatically)
+
+**Work closely with:**
+- **Pablo:** Ensure Login/Signup match design system, TopBar displays user correctly
+- **Tito:** apiClient must send JWT tokens correctly, handle 401 errors
+- **Colin & Crystal:** Their models reference your User model (ForeignKey to User)
+```
+
+---
+
+### Template for pablo.md:
+```markdown
+# Pablo's Tasks (Size: XL)
+
+## Your Mission
+You've already built the complete UI architecture for NUMENEON - all 75+ component and styling files. Your role now is to ensure the team's backend and state management layer integrates seamlessly with your components.
+
+## Files You Own (Pre-Built - DO NOT REBUILD)
+**All 75+ component and styling files** - These stay intact with your complete implementation.
+
+Your UI includes:
+- **Layout system:** TopBar (with MessageModal), SideNav, App routing
+- **Home page system:** Timeline River (3-column layout), media lightbox, delete modals
+- **Profile system:** Flip card animation, composer modal, timeline display
+- **Landing/About/NotFound pages:** Complete pages with styling
+- **Complete design system:** 13 global SCSS files (variables, mixins, themes, etc.)
+- **Contexts:** MessageContext (for DM modal state)
+
+## Your Responsibilities
+
+### ✅ Task 1: Document Component Data Requirements
+**What:** Add USAGE comment blocks to each component explaining what data it needs
+
+**Why:** Team needs to know what format their contexts/APIs should return so integration works
+
+**Acceptance Criteria:**
+- [ ] Every major component has USAGE comment at top
+- [ ] Comments specify which context component consumes (PostsContext, AuthContext, etc.)
+- [ ] Comments show expected data format with type examples
+- [ ] Comments explain integration points (what calls what)
+- [ ] Comments marked "DO NOT MODIFY"
+
+**Files:** All your JSX component files (~40 JSX files)
+
+**Example format:** See the TimelineRiverFeed example in this prompt
+
+---
+
+### ✅ Task 2: Define API Response Contracts
+**What:** Document the exact JSON structure your components expect from backend endpoints
+
+**Why:** Backend team (Natalia, Colin, Crystal) needs detailed specs to build APIs correctly
+
+**Acceptance Criteria:**
+- [ ] Post object format fully documented (all fields with types)
+- [ ] User object format fully documented
+- [ ] Friendship object format fully documented
+- [ ] All datetime formats specified (ISO strings: "2024-12-19T10:00:00Z")
+- [ ] Nested object structures shown (author: { id, username, profile_picture })
+
+**Create:** A reference doc or add to team-structure.md
+
+**Work with:**
+- Colin (posts API format)
+- Crystal (friends API format)
+- Natalia (users API format)
+
+---
+
+### ✅ Task 3: Review Context Implementations
+**What:** Code review team members' context implementations as they complete them
+
+**Why:** Ensure contexts provide data in the exact format your components expect
+
+**Acceptance Criteria:**
+- [ ] PostsContext provides `posts` array with correct object shape
+- [ ] PostsContext functions (fetchPosts, createPost, etc.) match your component calls
+- [ ] AuthContext provides `user` object in expected format
+- [ ] FriendsContext provides `friends` list correctly
+- [ ] All contexts handle loading and error states
+
+**Review these files:**
+- `frontend/src/contexts/PostsContext.jsx` (Colin)
+- `frontend/src/contexts/AuthContext.jsx` (Natalia)
+- `frontend/src/contexts/FriendsContext.jsx` (Crystal)
+- `frontend/src/contexts/ThemeContext.jsx` (Tito)
+
+---
+
+### ✅ Task 4: Integration Testing & Debugging Support
+**What:** Help team debug when their backend/contexts don't connect properly to your UI
+
+**Why:** You know exactly what data your components expect - you're the integration expert
+
+**Common Issues to Watch For:**
+- Date format mismatches (ISO strings vs Date objects vs formatted strings)
+- Missing nested fields (author.username missing, just shows author: 5)
+- Array vs object confusion (expecting array, getting object or vice versa)
+- Null handling (component crashes when image is null)
+- Type mismatches (string "5" vs number 5 for IDs)
+
+**Be available to:**
+- Review browser console errors
+- Check Network tab for API response formats
+- Verify context state in React DevTools
+- Help team understand component data flow
+
+---
+
+## What You DON'T Do
+
+- ❌ Don't rebuild any of your components
+- ❌ Don't add pseudocode to your JSX/SCSS files
+- ❌ Don't strip out your implementation
+- ❌ Don't modify your styling or animations
+- ❌ Don't change your design system files
+
+## Integration Points
+
+**You provide:**
+- **Complete UI layer** - All components that display data
+- **Design system** - Variables, mixins that Login/Signup/Friends/ThemeToggle use
+- **Data format specifications** - What your components expect from contexts/APIs
+- **MessageContext** - State for DM modal (already complete)
+
+**You consume:**
+- **PostsContext** (Colin) - Provides posts array for Timeline River
+- **AuthContext** (Natalia) - Provides user state, login/logout functions
+- **FriendsContext** (Crystal) - Provides friends data
+- **ThemeContext** (Tito) - Provides theme state (light/dark mode)
+
+**Work closely with:**
+- **Colin:** His PostsContext feeds your Home and Profile components
+- **Natalia:** Her AuthContext powers your TopBar user display, ProtectedRoute
+- **Crystal:** Her FriendsContext (if needed by any of your components)
+- **Everyone:** For integration debugging and API contract clarification
+```
+
+---
+
+### Template for team-structure.md:
+```markdown
+# NUMENEON Project Structure & Ownership
+
+## Overview
+This document shows who owns which files in the NUMENEON rebuild project.
+
+**Team:**
+- Pablo (XL) - UI Architecture (pre-built)
+- Natalia (L) - Auth Backend + Frontend + Migration Management
+- Colin (M) - Posts Backend + PostsContext
+- Crystal (M) - Friends Backend + FriendsContext + Friends UI
+- Tito (S) - Infrastructure (apiClient, ThemeContext, ThemeToggle)
+
+---
+
+## Global Design System (Pre-Implemented - DO NOT TOUCH)
+```
+frontend/src/styles/  [Pablo - Complete, No Changes]
+├── main.scss                 (Entry point, imports all partials)
+├── _variables.scss           (CSS custom properties: colors, spacing, fonts)
+├── _mixins.scss              (SCSS mixins: glass-card, neon-glow, etc.)
+├── _reset.scss               (CSS reset)
+├── _typography.scss          (Font imports and definitions)
+├── _theme.scss               (Theme setup)
+├── _light-mode.scss          (Light mode overrides)
+├── _layout.scss              (App shell layout)
+├── _blobs.scss               (Background decorations)
+├── _buttons.scss             (Global button styles)
+├── _cards.scss               (Global card styles)
+├── _animations.scss          (Keyframe animations)
+└── _utilities.scss           (Helper classes)
+NOTE: Everyone USES this design system in their component styles, but NO ONE modifies it.
+
+Backend Ownership
+backend/
+├── manage.py                 [Shared - Django CLI]
+├── db.sqlite3                [Shared - Database file]
+├── seed_posts.py             [Shared - Test data script]
+│
+├── huddl/                    [Django Project Config - Shared]
+│   ├── settings.py           (Pre-configured, no changes)
+│   ├── urls.py               (COLLABORATIVE - each person adds include())
+│   ├── __init__.py           (Shared)
+│   ├── asgi.py               (Shared)
+│   └── wsgi.py               (Shared)
+│
+├── users/                    [Natalia - Auth System]
+│   ├── models.py             REBUILD - Profile model
+│   ├── views.py              REBUILD - Signup/login/me endpoints
+│   ├── serializers.py        REBUILD - User data validation
+│   ├── urls.py               REBUILD - Auth routes
+│   ├── apps.py               (Minor config)
+│   ├── __init__.py           (Package marker)
+│   ├── management/
+│   │   ├── __init__.py
+│   │   └── commands/
+│   │       ├── __init__.py
+│   │       └── create_test_user.py
+│   └── migrations/
+│       ├── __init__.py
+│       └── 0001_initial.py   (Natalia creates & manages)
+│
+├── posts/                    [Colin - Posts System]
+│   ├── models.py             REBUILD - Post model (type, content, parent)
+│   ├── views.py              REBUILD - Posts CRUD via ViewSet
+│   ├── serializers.py        REBUILD - Post data validation
+│   ├── urls.py               REBUILD - Posts routes
+│   ├── admin.py              (Optional admin config)
+│   ├── apps.py               (Minor config)
+│   ├── __init__.py           (Package marker)
+│   └── migrations/           (Colin creates, Natalia manages)
+│       ├── __init__.py
+│       ├── 0001_initial.py
+│       └── 0002_post_parent.py
+│
+└── friends/                  [Crystal - Friends System]
+    ├── models.py             REBUILD - Friendship & FriendRequest models
+    ├── views.py              REBUILD - Friends operations
+    ├── serializers.py        REBUILD - Friends data validation
+    ├── urls.py               REBUILD - Friends routes
+    ├── admin.py              (Optional admin config)
+    ├── apps.py               (Minor config)
+    ├── __init__.py           (Package marker)
+    └── migrations/           (Crystal creates, Natalia manages)
+        ├── __init__.py
+        └── 0001_initial.py
+
+Frontend Ownership - Contexts & Services
+frontend/src/
+├── main.jsx                  [Tito] REBUILD - React entry point
+│
+├── contexts/
+│   ├── index.js              [COLLABORATIVE] - Each person adds export
+│   ├── AuthContext.jsx       [Natalia] REBUILD - Auth state + functions
+│   ├── PostsContext.jsx      [Colin] REBUILD - Posts state + CRUD
+│   ├── FriendsContext.jsx    [Crystal] REBUILD - Friends state + operations
+│   ├── ThemeContext.jsx      [Tito] REBUILD - Theme state
+│   └── MessageContext.jsx    [Pablo] PRE-BUILT - DM modal state
+│
+└── services/
+    ├── apiClient.js          [Tito] REBUILD - Axios + JWT interceptors
+    ├── postsService.js       [Colin] REBUILD - Posts API calls
+    └── friendsService.js     [Crystal] REBUILD - Friends API calls
+
+Frontend Ownership - Components
+frontend/src/components/
+│
+├── layout/                   [Pablo - All PRE-BUILT]
+│   ├── TopBar/
+│   │   ├── TopBar.jsx
+│   │   ├── TopBar.scss
+│   │   ├── index.js
+│   │   └── MessageModal/    (8 SCSS partials)
+│   └── SideNav/
+│       ├── SideNav.jsx
+│       ├── SideNav.scss
+│       └── index.js
+│
+├── pages/
+│   ├── Home/                [Pablo - All PRE-BUILT]
+│   │   ├── Home.jsx
+│   │   ├── Home.scss
+│   │   ├── index.js
+│   │   ├── utils/
+│   │   │   └── groupPosts.js
+│   │   └── components/
+│   │       ├── DeleteConfirmModal/
+│   │       ├── MediaLightbox/  (7 SCSS partials)
+│   │       ├── TimelineRiverFeed/
+│   │       └── TimelineRiverRow/  (11 SCSS partials)
+│   │
+│   ├── Profile/             [Pablo - All PRE-BUILT]
+│   │   ├── Profile.jsx
+│   │   ├── Profile.scss
+│   │   ├── index.js
+│   │   └── components/
+│   │       ├── ComposerModal/
+│   │       ├── ProfileCard/    (5 subcomponents)
+│   │       └── TimelineRiver/
+│   │
+│   ├── Login/               [Natalia] REBUILD
+│   │   ├── Login.jsx
+│   │   ├── Login.scss
+│   │   └── index.js
+│   │
+│   ├── Signup/              [Natalia] REBUILD
+│   │   ├── Signup.jsx
+│   │   ├── Signup.scss
+│   │   └── index.js
+│   │
+│   ├── Friends/             [Crystal] REBUILD
+│   │   ├── Friends.jsx
+│   │   ├── Friends.scss
+│   │   └── index.js
+│   │
+│   ├── About/               [Pablo - PRE-BUILT]
+│   ├── Landing/             [Pablo - PRE-BUILT]
+│   └── NotFound/            [Pablo - PRE-BUILT]
+│
+└── ui/
+    ├── ProtectedRoute.jsx   [Natalia] REBUILD
+    └── ThemeToggle/         [Tito] REBUILD
+        ├── ThemeToggle.jsx
+        ├── ThemeToggle.scss
+        └── index.js
+
+Key Integration Points
+Data Flow (Backend → Context → Component):
+Posts Flow:
+Backend posts API [Colin]
+    ↓ (HTTP requests)
+postsService.js [Colin]
+    ↓ (function calls)
+PostsContext [Colin]
+    ↓ (usePosts hook)
+TimelineRiverFeed [Pablo]
+    ↓ (renders)
+TimelineRiverRow [Pablo]
+Auth Flow:
+Backend auth API [Natalia]
+    ↓ (HTTP requests)
+Tito's apiClient [Tito]
+    ↓ (function calls)
+AuthContext [Natalia]
+    ↓ (useAuth hook)
+Login/Signup/TopBar/ProtectedRoute [Natalia/Pablo]
+Friends Flow:
+Backend friends API [Crystal]
+    ↓ (HTTP requests)
+friendsService.js [Crystal]
+    ↓ (function calls)
+FriendsContext [Crystal]
+    ↓ (useFriends hook)
+Friends.jsx [Crystal]
+Styling Flow:
+Pablo's global styles (src/styles/)
+    ↓ (imports & usage)
+All component SCSS files
+    ↓ (apply mixins & variables)
+Component UI
+
+File Counts by Team Member
+PersonBackendFrontendTotalNotesPablo0~75~75UI pre-built (usage comments only)Natalia111021+ migration managementColin729Crystal7512Tito066Shared~10~17~27Config files, no changes
+
+Critical Rules
+
+NO TWO PEOPLE work on the same file (prevents merge conflicts)
+Pablo's UI stays 100% intact (team builds the engine that powers it)
+Global styles are untouchable (everyone uses them, nobody modifies)
+Shared files are read-only (except collaborative files where everyone adds one line)
+Collaborative files: Each person adds exactly ONE thing (one include(), one export)
+
+
+---
+
+## YOUR IMPLEMENTATION TASKS
+
+### Task 1: Add USAGE Comments to Pablo's UI Files (~75 files)
+
+For each of Pablo's JSX component files:
+- Add usage comment block at top (see TimelineRiverFeed example above)
+- Explain what data the component needs
+- Show expected data format
+- Mark as "DO NOT MODIFY"
+- Keep all implementation intact
+
+**Files:** All `.jsx` files in Pablo's components folders
+
+---
+
+### Task 2: Add Full Pseudocode to Backend Files
+
+For Natalia's, Colin's, and Crystal's backend files:
+- Add comprehensive pseudocode explaining what to build
+- Use the backend examples above as templates
+- Include Django hints (ForeignKey, choices, serializers, ViewSets, etc.)
+- Show expected API request/response formats
+- Add learning prompts
+
+**Files:**
+- All `.py` files in `backend/users/` (Natalia)
+- All `.py` files in `backend/posts/` (Colin)
+- All `.py` files in `backend/friends/` (Crystal)
+
+---
+
+### Task 3: Add Full Pseudocode to Context/Service Files
+
+For contexts and services:
+- Add comprehensive pseudocode explaining state management
+- Use the context/service examples above as templates
+- Show integration with components
+- Specify data formats
+- Add learning prompts
+
+**Files:**
+- AuthContext.jsx (Natalia)
+- PostsContext.jsx (Colin)
+- FriendsContext.jsx (Crystal)
+- ThemeContext.jsx (Tito)
+- apiClient.js (Tito)
+- postsService.js (Colin)
+- friendsService.js (Crystal)
+
+---
+
+### Task 4: Add Full Pseudocode to Simple UI Components
+
+For Login, Signup, Friends, ProtectedRoute, ThemeToggle:
+- Add JSX pseudocode (see Login.jsx example)
+- Add SCSS pseudocode (see Login.scss example)
+- Add simple export in index.js files
+- These are simple enough for team to rebuild
+
+**Files:**
+- Login/Signup components + styles (Natalia)
+- Friends component + styles (Crystal)
+- ProtectedRoute (Natalia)
+- ThemeToggle component + styles (Tito)
+- All related index.js files
+
+---
+
+### Task 5: Add Collaborative File TODOs
+
+For `backend/huddl/urls.py` and `frontend/src/contexts/index.js`:
+- Add TODO comments for each person
+- Show example of what to add
+- Use collaborative file examples above
+
+---
+
+### Task 6: Add Learning Comments to Utilities
+
+For `groupPosts.js`:
+- Add explanation comment (see utility example above)
+- Keep implementation intact
+- Mark as reference
+
+---
+
+### Task 7: Create Team Plan Markdown Files
+
+Create `team-plan/` folder with 6 markdown files:
+- `natalia.md` (use complete example above)
+- `colin.md` (similar to Natalia, adjusted for his tasks)
+- `crystal.md` (similar to Natalia, adjusted for her tasks)
+- `pablo.md` (use template above)
+- `tito.md` (similar pattern, adjusted for infrastructure tasks)
+- `team-structure.md` (use template above)
+
+---
+
+## CRITICAL REMINDERS
+
+1. **Plain Language First:** No jargon without explanation
+2. **Learning Over Dictation:** Problems to solve, not solutions to copy
+3. **Integration Context:** Always explain how pieces connect
+4. **Consistent Style:** Same pseudocode template across all files
+5. **Design System:** Remind component owners to use pre-built styles
+6. **Pablo's UI Stays Intact:** Just add usage comments, don't modify implementation
+7. **No Duplicate File Access:** Clear ownership prevents conflicts
+
+---
+
+## OUTPUT FORMAT
+
+Provide me with:
+
+1. **Confirmation Summary:**
+   - "Usage comments added to [X] Pablo UI files"
+   - "Pseudocode added to [Y] backend files"
+   - "Pseudocode added to [Z] context/service files"
+   - "Pseudocode added to [W] simple UI files"
+   - "Team plan files created: [6 files]"
+
+2. **File Count Breakdown:**
+   - Pablo UI files with usage comments: [count]
+   - Backend files with pseudocode: [count]
+   - Context/service files with pseudocode: [count]
+   - Simple UI files with pseudocode: [count]
+   - Collaborative files with TODOs: [count]
+
+3. **Sample Files (show me these 5):**
+   - One Pablo component with usage comment (TimelineRiverFeed.jsx)
+   - One backend model with pseudocode (posts/models.py)
+   - One context with pseudocode (PostsContext.jsx)
+   - One simple UI component with pseudocode (Login.jsx)
+   - One team plan file (natalia.md)
+
+4. **Any Issues/Questions:**
+   - Flag anything unclear
+   - Ask for clarification if needed
+   - Note any files that don't fit the patterns
+
+---
+
+**BEGIN IMPLEMENTATION**
+
+Add pseudocode and usage comments to all assigned files following the guidelines and examples above. Create all team plan markdown files.
+
+Pablo, this is now ONE COMPLETE SELF-CONTAINED PROMPT. Send this to Copilot - it has everything: context, validation results, revised strategy, examples, and instructions.
