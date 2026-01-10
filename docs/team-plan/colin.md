@@ -1,8 +1,8 @@
-# Colin's Tasks (Size: M)
+# Colin's Tasks - Posts System (Backend)
 
 ## Your Mission
 
-You're building the Posts system - the heart of NUMENEON's social feed. Users create posts (thoughts, media, milestones), reply to them, and they all flow into Pablo's cyberpunk Timeline River UI. You're handling both the backend data layer and the frontend state management that ties everything together.
+You're building the Posts system - the heart of NUMENEON's social feed. Users create posts (thoughts, media, milestones), like them, share them, and reply to create threads.
 
 ## Files You Own
 
@@ -10,107 +10,180 @@ You're building the Posts system - the heart of NUMENEON's social feed. Users cr
 
 ### Backend Files (7 total)
 
-- `backend/posts/models.py` - Post data structure (type, content, image, replies)
-- `backend/posts/views.py` - Posts API endpoints (CRUD + replies)
+- `backend/posts/models.py` - Post and Like models
+- `backend/posts/views.py` - Posts API endpoints (CRUD + like + share + replies)
 - `backend/posts/serializers.py` - Post data validation and formatting
 - `backend/posts/urls.py` - Posts API routes configuration
 - `backend/posts/apps.py` - Django app configuration
 - `backend/posts/__init__.py` - Package marker
 - `backend/posts/admin.py` - Django admin interface for posts
 
-### Frontend Files (2 total)
-
-- `frontend/src/contexts/PostsContext.jsx` - Posts state management for entire app
-- `frontend/src/services/postsService.js` - Posts API calls wrapper
-
 ---
 
 ## Task Breakdown
 
-### ✅ Task 1: Create Post Model
+### ✅ Task 1: Create Post and Like Models
 
 **Files:** `backend/posts/models.py`
 
-**What:** Define the database structure for posts
+**Post Model Fields:**
 
-**Why:** This is the core content type - thoughts, media, and milestones that users create
+| Field           | Type               | Description                             |
+| --------------- | ------------------ | --------------------------------------- |
+| `author`        | ForeignKey(User)   | Post creator                            |
+| `type`          | CharField(choices) | 'thoughts', 'media', or 'milestones'    |
+| `content`       | TextField(500)     | Post text (required)                    |
+| `media_url`     | URLField           | Optional URL to media (NOT ImageField!) |
+| `parent`        | ForeignKey(self)   | For replies (null for top-level posts)  |
+| `created_at`    | DateTimeField      | Auto-set on creation                    |
+| `updated_at`    | DateTimeField      | Auto-set on save                        |
+| `likes_count`   | IntegerField       | Cached like count (default=0)           |
+| `comment_count` | IntegerField       | Cached comment count (default=0)        |
+| `shares_count`  | IntegerField       | Cached share count (default=0)          |
 
-**Acceptance Criteria:**
+**Post Model Hints:**
 
-- [ ] Post has `author` field (ForeignKey to User)
-- [ ] Post has `type` field (choices: 'thoughts', 'media', 'milestones')
-- [ ] Post has `content` field (text, can be blank for media-only posts)
-- [ ] Post has `media_url` field (optional URL field, NOT ImageField)
-- [ ] Post has `parent` field (ForeignKey to self, for replies - nullable)
-- [ ] Post has `created_at` field (auto-set timestamp)
-- [ ] Post has `likes_count` field (integer, default 0)
-- [ ] Post has `reply_count` field (integer, default 0) - NOT comment_count!
-- [ ] Post has `shares_count` field (integer, default 0)
+```python
+POST_TYPES = [('thoughts', 'Thoughts'), ('media', 'Media'), ('milestones', 'Milestones')]
 
-**Think about:**
+type = models.CharField(max_length=20, choices=POST_TYPES, default='thoughts')
+media_url = models.URLField(blank=True, null=True)
+parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+```
 
-- How do you create a self-referential ForeignKey (post replying to another post)?
-- What's the difference between `blank=True` and `null=True`?
-- For `type` field, how do you restrict to only 3 values? (Django choices)
-- Why would `image` need BOTH `blank=True` AND `null=True`?
+**Like Model:**
 
-**Helpful Resources:** Django ForeignKey docs, choices parameter
+Tracks which users liked which posts. Use `unique_together` to prevent duplicate likes.
+
+```python
+class Like(models.Model):
+    user = ForeignKey(User, related_name='likes')
+    post = ForeignKey(Post, related_name='likes')
+    created_at = DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')
+```
 
 ---
 
-### ✅ Task 2: Build Post Serializers
+### ✅ Task 2: Build Post Serializer
 
 **Files:** `backend/posts/serializers.py`
 
-**What:** Transform Post model data into JSON for the API, include nested author info
+**Key Requirements:**
 
-**Why:** Frontend needs author details (username, avatar) with each post, not just author ID
+- Nested author data (not just ID) - import UserSerializer from users app
+- Include `is_liked` field (SerializerMethodField) - check if current user liked this post
+- Include `reply_count` field (SerializerMethodField) - count of replies
+- Accept `parent_id` for creating replies (PrimaryKeyRelatedField with source='parent')
 
-**Acceptance Criteria:**
+**Expected Output Format:**
 
-- [ ] PostSerializer includes all Post model fields
-- [ ] Author field is nested (shows username, profile_picture, not just ID)
-- [ ] Image field returns full URL, not relative path
-- [ ] Created_at is in ISO 8601 format
-- [ ] Replies count is included (count of posts with this post as parent)
+```json
+{
+  "id": 1,
+  "author": {
+    "id": 5,
+    "username": "alice",
+    "first_name": "Alice",
+    "last_name": "Smith"
+  },
+  "type": "thoughts",
+  "content": "Hello NUMENEON!",
+  "media_url": null,
+  "parent": null,
+  "parent_id": null,
+  "created_at": "2024-12-19T10:30:00Z",
+  "updated_at": "2024-12-19T10:30:00Z",
+  "likes_count": 42,
+  "comment_count": 7,
+  "shares_count": 3,
+  "is_liked": false,
+  "reply_count": 2
+}
+```
 
-**Think about:**
+**Serializer Hints:**
 
-- How do you nest another serializer? (SerializerMethodField? Nested serializer?)
-- Should you use ModelSerializer or Serializer base class?
-- How do you calculate replies count efficiently?
+```python
+from users.serializers import UserSerializer
 
-**Helpful Resources:** DRF nested serializers, SerializerMethodField
+author = UserSerializer(read_only=True)
+is_liked = serializers.SerializerMethodField()
+reply_count = serializers.SerializerMethodField()
+parent_id = serializers.PrimaryKeyRelatedField(
+    queryset=Post.objects.all(), source='parent',
+    write_only=True, required=False, allow_null=True
+)
+
+def get_is_liked(self, obj):
+    user = self.context['request'].user
+    if user.is_authenticated:
+        return Like.objects.filter(user=user, post=obj).exists()
+    return False
+
+def get_reply_count(self, obj):
+    return obj.replies.count()
+```
 
 ---
 
-### ✅ Task 3: Build Posts API Views
+### ✅ Task 3: Build Posts API Views (ViewSet)
 
 **Files:** `backend/posts/views.py`
 
-**What:** Create endpoints that handle all post operations
+**Use ModelViewSet for automatic CRUD operations.**
 
-**Why:** Frontend needs to fetch, create, update, delete posts
+**Standard Endpoints (automatic from ViewSet):**
 
-**Acceptance Criteria:**
+| Method | Endpoint           | Action       | Description     |
+| ------ | ------------------ | ------------ | --------------- |
+| GET    | `/api/posts/`      | `list()`     | Get all posts   |
+| POST   | `/api/posts/`      | `create()`   | Create new post |
+| GET    | `/api/posts/{id}/` | `retrieve()` | Get single post |
+| PUT    | `/api/posts/{id}/` | `update()`   | Update post     |
+| DELETE | `/api/posts/{id}/` | `destroy()`  | Delete post     |
 
-- [ ] GET /api/posts/ - List all posts
-- [ ] POST /api/posts/ - Create new post (authenticated only)
-- [ ] GET /api/posts/:id/ - Get single post
-- [ ] PATCH /api/posts/:id/ - Update post (author only)
-- [ ] DELETE /api/posts/:id/ - Delete post (author only)
-- [ ] GET /api/posts/:id/replies/ - Get all replies to a post
-- [ ] POST /api/posts/:id/like/ - Toggle like on a post
-- [ ] POST /api/posts/:id/share/ - Share/repost (increments shares_count)
+**Custom Actions (use @action decorator):**
 
-**Think about:**
+| Method | Endpoint                   | Action      | Description           |
+| ------ | -------------------------- | ----------- | --------------------- |
+| GET    | `/api/posts/{id}/replies/` | `replies()` | Get replies to a post |
+| POST   | `/api/posts/{id}/like/`    | `like()`    | Toggle like on post   |
+| POST   | `/api/posts/{id}/share/`   | `share()`   | Increment share count |
 
-- Should you use ViewSet or APIView?
-- How do you restrict some endpoints to authenticated users only?
-- How do you ensure only the author can edit/delete their post?
-- For custom endpoints like `/replies/`, how do you add them? (@action decorator?)
+**Key Implementation Details:**
 
-**Helpful Resources:** DRF ViewSets, permissions, @action decorator
+- `get_queryset()`: For list action, return only top-level posts (`parent__isnull=True`). Support `?username=` filter.
+- `perform_create()`: Auto-set `author=request.user`
+- `like()`: Toggle - if Like exists, delete it (decrement count); if not, create it (increment count)
+- `share()`: Simply increment `shares_count`
+
+**View Hints:**
+
+```python
+@action(detail=True, methods=['get'])
+def replies(self, request, pk=None):
+    post = self.get_object()
+    replies = Post.objects.filter(parent=post)
+    serializer = self.get_serializer(replies, many=True)
+    return Response(serializer.data)
+
+@action(detail=True, methods=['post'])
+def like(self, request, pk=None):
+    post = self.get_object()
+    user = request.user
+    existing = Like.objects.filter(user=user, post=post).first()
+    if existing:
+        existing.delete()
+        post.likes_count -= 1
+    else:
+        Like.objects.create(user=user, post=post)
+        post.likes_count += 1
+    post.save()
+    return Response(self.get_serializer(post).data)
+```
 
 ---
 
@@ -118,20 +191,19 @@ You're building the Posts system - the heart of NUMENEON's social feed. Users cr
 
 **Files:** `backend/posts/urls.py`
 
-**What:** Map URL patterns to your views
+**Use DefaultRouter with ViewSet:**
 
-**Why:** Defines what URLs the frontend can call
+```python
+from rest_framework.routers import DefaultRouter
+from .views import PostViewSet
 
-**Acceptance Criteria:**
+router = DefaultRouter()
+router.register(r'', PostViewSet, basename='post')
 
-- [ ] All CRUD endpoints mapped correctly
-- [ ] Custom endpoints (/replies/, /like/) included
-- [ ] Router configured if using ViewSet
+urlpatterns = router.urls
+```
 
-**Think about:**
-
-- If using ViewSet, DefaultRouter handles most URLs automatically
-- Custom @action endpoints need explicit registration
+The router auto-generates all CRUD routes plus custom @action routes.
 
 ---
 
@@ -139,83 +211,12 @@ You're building the Posts system - the heart of NUMENEON's social feed. Users cr
 
 **Files:** `backend/posts/admin.py`
 
-**What:** Register Post model in Django admin interface
-
-**Why:** Allows easy viewing/editing of posts during development
-
 **Acceptance Criteria:**
 
 - [ ] Post model registered
+- [ ] Like model registered
 - [ ] List display shows author, type, content preview, created_at
 - [ ] Can filter by type and author
-- [ ] Can search by content
-
-**Think about:**
-
-- What fields are most useful to see in the admin list?
-- Should content be truncated in the list view?
-
----
-
-### ✅ Task 6: Build PostsContext (Frontend State)
-
-**Files:** `frontend/src/contexts/PostsContext.jsx`
-
-**What:** React context that manages all post data for the app
-
-**Why:** Home and Profile pages both need posts - context provides single source of truth
-
-**Acceptance Criteria:**
-
-- [ ] Stores `posts` array in state
-- [ ] Provides `fetchPosts()` function
-- [ ] Provides `createPost(postData)` function
-- [ ] Provides `updatePost(id, updates)` function
-- [ ] Provides `deletePost(id)` function
-- [ ] Provides `getReplies(parentId)` function
-- [ ] Provides `likePost(id)` function
-- [ ] Provides `sharePost(id)` function (increments shares_count)
-- [ ] Handles loading and error states
-- [ ] Fetches posts on mount
-
-**Think about:**
-
-- Should you refetch all posts after creating one, or just add the new post to state?
-- How do you handle errors from API calls?
-- When should `fetchPosts()` run? (useEffect on mount)
-- How do you sort posts? (By created_at, newest first?)
-
-**Helpful Resources:** Look at AuthContext (Natalia) for similar pattern
-
----
-
-### ✅ Task 7: Build Posts Service Layer
-
-**Files:** `frontend/src/services/postsService.js`
-
-**What:** Functions that make HTTP requests to posts API
-
-**Why:** Separates API logic from React components
-
-**Acceptance Criteria:**
-
-- [ ] `getPosts()` - Fetch all posts
-- [ ] `getPost(id)` - Fetch single post
-- [ ] `createPost(postData)` - Create new post
-- [ ] `updatePost(id, updates)` - Update post
-- [ ] `deletePost(id)` - Delete post
-- [ ] `getReplies(parentId)` - Fetch replies
-- [ ] `likePost(id)` - Toggle like
-- [ ] All functions return response.data
-- [ ] Image uploads handled with FormData
-
-**Think about:**
-
-- For image uploads, how should data be formatted? (FormData for multipart/form-data)
-- Should you handle errors here or let them bubble up to context?
-- How do you use apiClient.js (Tito's file)?
-
-**Helpful Resources:** Uses apiClient.js (Tito), FormData for file uploads
 
 ---
 
@@ -223,70 +224,46 @@ You're building the Posts system - the heart of NUMENEON's social feed. Users cr
 
 **You provide:**
 
-- Posts API endpoints (GET/POST/PATCH/DELETE /api/posts/)
-- PostsContext with `usePosts()` hook
-- Post data format: `{ id, author: {username, profile_picture}, type, content, image, created_at, parent }`
+- Posts API endpoints at `/api/posts/`
+- Like toggle functionality
+- Share counting
+- Reply threading
 
 **You consume:**
 
-- User model (Natalia) - posts have author (ForeignKey to User)
-- apiClient.js (Tito) - for making authenticated API calls
-- Pablo's TimelineRiverFeed - renders your posts array
-- Pablo's ComposerModal - calls your createPost() function
+- User model (Natalia) - author field references User
+- JWT auth (simplejwt) - all endpoints require authentication
 
 **Work with:**
 
-- **Natalia:** Your Post model references her User model for author field
-- **Tito:** Your postsService uses his apiClient
-- **Pablo:** His UI expects specific post data format from your context
-
----
-
-## Post Data Format (Critical!)
-
-Pablo's Timeline UI expects posts in this EXACT format:
-
-```javascript
-{
-  id: 1,
-  author: {
-    id: 5,
-    username: "alice",
-    profile_picture: "https://..."  // full URL
-  },
-  type: "thoughts",  // or "media" or "milestones" (NOT singular!)
-  content: "This is my post text",
-  media_url: "https://..." | null,  // NOT 'image'!
-  parent: 3 | null,  // ID of parent post if this is a reply
-  parent_id: 3 | null,  // Also include parent_id
-  created_at: "2024-12-19T10:00:00Z",  // ISO format
-  likes_count: 5,
-  reply_count: 2,  // NOT comment_count!
-  shares_count: 3,  // NEW - required for share button
-  is_liked: false  // Has current user liked this post?
-}
-```
-
-**Column Logic:**
-
-- `type === 'thoughts'` → Left column (text posts)
-- `type === 'media'` → Center column (image posts)
-- `type === 'milestones'` → Right column (achievements)
+- **Natalia:** Your Post.author references her User model
 
 ---
 
 ## Testing Checklist
 
-- [ ] Can create new post via /api/posts/
-- [ ] Can create post with image upload
-- [ ] Can create reply to existing post (parent field set)
-- [ ] Can fetch all posts via /api/posts/
-- [ ] Can update own post (content, image)
-- [ ] Cannot update someone else's post (403 error)
+- [ ] Can create a post (thoughts, media, milestones)
+- [ ] Can retrieve all posts (GET /api/posts/)
+- [ ] Can filter posts by username (?username=)
+- [ ] Can retrieve single post
+- [ ] Can update own post
 - [ ] Can delete own post
-- [ ] Cannot delete someone else's post (403 error)
-- [ ] Can fetch replies to a post via /api/posts/:id/replies/
-- [ ] Posts show correct author info (username, avatar)
-- [ ] Posts appear in correct Timeline River column based on type
-- [ ] PostsContext.fetchPosts() populates posts in UI
-- [ ] PostsContext.createPost() adds post to Timeline immediately
+- [ ] Cannot edit/delete other users' posts
+- [ ] Can like a post (creates Like, increments likes_count)
+- [ ] Can unlike a post (deletes Like, decrements likes_count)
+- [ ] Can share a post (increments shares_count)
+- [ ] Can create reply (post with parent_id)
+- [ ] Can get replies for a post (GET /api/posts/{id}/replies/)
+- [ ] is_liked field correctly shows current user's like status
+
+---
+
+## Fixture Data
+
+After running migrations, load the demo data:
+
+```bash
+python manage.py loaddata posts_and_users.json
+```
+
+This includes 130+ posts with engagement data (likes, comments, shares).

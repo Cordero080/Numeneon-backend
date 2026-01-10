@@ -1,8 +1,8 @@
-# Crystal's Tasks (Size: M)
+# Crystal's Tasks - Friends System (Backend)
 
 ## Your Mission
 
-You're building the Friends system - connections between users. You handle friend requests, approvals, and the social graph that makes NUMENEON a network. Plus you're building the Friends page UI where users manage their connections.
+You're building the Friends system - connections between users. You handle friend requests, approvals, and the social graph that makes NUMENEON a network.
 
 ## Files You Own
 
@@ -10,52 +10,87 @@ You're building the Friends system - connections between users. You handle frien
 
 ### Backend Files (7 total)
 
-- `backend/friends/models.py` - Friendship data structure (requests, status)
-- `backend/friends/views.py` - Friends API endpoints (send request, accept, remove)
+- `backend/friends/models.py` - Friendship & FriendRequest models
+- `backend/friends/views.py` - Friends API endpoints
 - `backend/friends/serializers.py` - Friend data validation and formatting
 - `backend/friends/urls.py` - Friends API routes configuration
 - `backend/friends/apps.py` - Django app configuration
 - `backend/friends/__init__.py` - Package marker
 - `backend/friends/admin.py` - Django admin interface for friendships
 
-### Frontend Files (5 total)
+---
 
-- `frontend/src/contexts/FriendsContext.jsx` - Friends state management
-- `frontend/src/services/friendsService.js` - Friends API calls wrapper
-- `frontend/src/components/pages/Friends/Friends.jsx` - Friends page UI
-- `frontend/src/components/pages/Friends/Friends.scss` - Friends page styling
-- `frontend/src/components/pages/Friends/index.js` - Component export
+## ⚠️ CRITICAL: Model Design (Directional Friendships)
+
+**Your models use a DIRECTIONAL approach, NOT a status-based one!**
+
+### Friendship Model (Two records per friendship)
+
+```python
+class Friendship(models.Model):
+    user = ForeignKey(User, related_name='friendships')   # Owner of this entry
+    friend = ForeignKey(User, related_name='friends_of')  # The friend
+    created_at = DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['user', 'friend']
+```
+
+**When Alice and Bob become friends, create TWO records:**
+
+- `Friendship(user=alice, friend=bob)`
+- `Friendship(user=bob, friend=alice)`
+
+### FriendRequest Model (NO status field!)
+
+```python
+class FriendRequest(models.Model):
+    from_user = ForeignKey(User, related_name='sent_requests')
+    to_user = ForeignKey(User, related_name='received_requests')
+    created_at = DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['from_user', 'to_user']
+```
+
+**When request is accepted:**
+
+1. Create TWO Friendship records (both directions)
+2. DELETE the FriendRequest (don't update status - just delete it!)
+
+**When request is declined:**
+
+1. DELETE the FriendRequest
 
 ---
 
 ## Task Breakdown
 
-### ✅ Task 1: Create Friendship Model
+### ✅ Task 1: Create Friendship Models
 
 **Files:** `backend/friends/models.py`
 
-**What:** Define the database structure for friend relationships
-
-**Why:** Social networks need to track who's connected to who
-
 **Acceptance Criteria:**
 
-- [ ] Friendship has `user1` field (ForeignKey to User)
-- [ ] Friendship has `user2` field (ForeignKey to User)
-- [ ] Friendship has `status` field (choices: 'pending', 'accepted', 'rejected')
-- [ ] Friendship has `created_at` field (auto-set timestamp)
-- [ ] Friendship has `action_user` field (who sent the request)
-- [ ] Constraint: Cannot friend yourself (user1 != user2)
-- [ ] Constraint: Only one friendship record per user pair
+- [ ] Friendship model with `user`, `friend`, `created_at` fields
+- [ ] FriendRequest model with `from_user`, `to_user`, `created_at` fields
+- [ ] NO status field on FriendRequest!
+- [ ] `unique_together` constraints to prevent duplicates
+- [ ] `__str__` methods for admin readability
 
-**Think about:**
+**Model Hints from Shell:**
 
-- How do you prevent duplicate friendships? (unique_together constraint)
-- Should the model be directional (A→B) or bidirectional?
-- How do you query "all friends of user X"? (filter by user1 OR user2)
-- What's the difference between a pending request and accepted friendship?
+```python
+# Friendship
+user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friendships')
+friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friends_of')
+created_at = models.DateTimeField(auto_now_add=True)
 
-**Helpful Resources:** Django constraints, unique_together
+# FriendRequest
+from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_requests')
+to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_requests')
+created_at = models.DateTimeField(auto_now_add=True)
+```
 
 ---
 
@@ -63,25 +98,13 @@ You're building the Friends system - connections between users. You handle frien
 
 **Files:** `backend/friends/serializers.py`
 
-**What:** Transform Friendship data into JSON, include user details
-
-**Why:** Frontend needs to show username, avatar for friend requests and friend lists
-
 **Acceptance Criteria:**
 
-- [ ] FriendshipSerializer includes all Friendship fields
-- [ ] User1 and user2 are nested (show username, profile_picture)
-- [ ] Status field is included
-- [ ] Created_at is in ISO format
-- [ ] Serializer can handle creating new friendships
+- [ ] FriendshipSerializer with nested user/friend data
+- [ ] FriendRequestSerializer with nested from_user/to_user data
+- [ ] Import UserSerializer from users app for nesting
 
-**Think about:**
-
-- How do you nest user data without exposing passwords?
-- Should you show who sent the request (action_user)?
-- How do you validate that user1 != user2 when creating?
-
-**Helpful Resources:** DRF nested serializers, validation
+**NOTE:** In views, you may build response dicts manually for simple endpoints like `friend_list`. These serializers are for more complex scenarios.
 
 ---
 
@@ -89,27 +112,51 @@ You're building the Friends system - connections between users. You handle frien
 
 **Files:** `backend/friends/views.py`
 
-**What:** Create endpoints for friend operations
+**Endpoints to create (function-based views):**
 
-**Why:** Users need to send requests, accept/reject them, and remove friends
+| Method | Endpoint                             | Function             | Description                 |
+| ------ | ------------------------------------ | -------------------- | --------------------------- |
+| GET    | `/api/friends/`                      | `friend_list()`      | List current user's friends |
+| GET    | `/api/friends/requests/`             | `pending_requests()` | List incoming requests      |
+| POST   | `/api/friends/request/<user_id>/`    | `send_request()`     | Send friend request         |
+| POST   | `/api/friends/accept/<request_id>/`  | `accept_request()`   | Accept a request            |
+| POST   | `/api/friends/decline/<request_id>/` | `decline_request()`  | Decline a request           |
+| DELETE | `/api/friends/remove/<user_id>/`     | `remove_friend()`    | Remove a friend             |
 
-**Acceptance Criteria:**
+**Expected Response for GET /api/friends/:**
 
-- [ ] GET /api/friends/ - List all accepted friendships for current user
-- [ ] GET /api/friends/pending/ - List incoming friend requests
-- [ ] POST /api/friends/request/ - Send friend request to another user
-- [ ] POST /api/friends/:id/accept/ - Accept pending request
-- [ ] POST /api/friends/:id/reject/ - Reject pending request
-- [ ] DELETE /api/friends/:id/ - Remove friendship (unfriend)
+```json
+[
+  { "id": 1, "username": "alice", "first_name": "Alice", "last_name": "Smith" },
+  { "id": 2, "username": "bob", "first_name": "Bob", "last_name": "Jones" }
+]
+```
 
-**Think about:**
+**Expected Response for GET /api/friends/requests/:**
 
-- How do you get "all friends of current user" (WHERE user1=X OR user2=X)?
-- Should only the recipient be able to accept/reject requests?
-- What happens if you send a request to someone who already sent you one?
-- How do you prevent duplicate requests?
+```json
+[
+  {
+    "id": 1,
+    "from_user": {
+      "id": 5,
+      "username": "charlie",
+      "first_name": "Charlie",
+      "last_name": "Brown"
+    },
+    "created_at": "2024-12-19T10:30:00Z"
+  }
+]
+```
 
-**Helpful Resources:** DRF ViewSets, Q objects for OR queries, @action decorator
+**Key Implementation Details:**
+
+- `friend_list`: Query `Friendship.objects.filter(user=request.user)` and return friend data
+- `pending_requests`: Query `FriendRequest.objects.filter(to_user=request.user)`
+- `send_request`: Validate (can't friend self, no existing request), create FriendRequest
+- `accept_request`: Create TWO Friendships, DELETE the FriendRequest
+- `decline_request`: Just DELETE the FriendRequest
+- `remove_friend`: Delete BOTH Friendship records
 
 ---
 
@@ -117,14 +164,18 @@ You're building the Friends system - connections between users. You handle frien
 
 **Files:** `backend/friends/urls.py`
 
-**What:** Map URL patterns to your views
+**Routes to configure:**
 
-**Why:** Defines what URLs the frontend can call
-
-**Acceptance Criteria:**
-
-- [ ] All endpoints mapped correctly
-- [ ] Custom actions (/pending/, /accept/, /reject/) configured
+```python
+urlpatterns = [
+    path('', views.friend_list, name='friend_list'),
+    path('requests/', views.pending_requests, name='pending_requests'),
+    path('request/<int:user_id>/', views.send_request, name='send_request'),
+    path('accept/<int:request_id>/', views.accept_request, name='accept_request'),
+    path('decline/<int:request_id>/', views.decline_request, name='decline_request'),
+    path('remove/<int:user_id>/', views.remove_friend, name='remove_friend'),
+]
+```
 
 ---
 
@@ -132,103 +183,11 @@ You're building the Friends system - connections between users. You handle frien
 
 **Files:** `backend/friends/admin.py`
 
-**What:** Register Friendship model in Django admin
-
-**Why:** Easy viewing/management during development
-
 **Acceptance Criteria:**
 
-- [ ] Friendship model registered
-- [ ] List display shows user1, user2, status, created_at
-- [ ] Can filter by status
-- [ ] Can search by username
-
----
-
-### ✅ Task 6: Build FriendsContext (Frontend State)
-
-**Files:** `frontend/src/contexts/FriendsContext.jsx`
-
-**What:** React context that manages friend data across the app
-
-**Why:** Multiple components need friend data (Friends page, TopBar notifications, search results)
-
-**Acceptance Criteria:**
-
-- [ ] Stores `friends` array (accepted friendships)
-- [ ] Stores `pendingRequests` array (incoming requests)
-- [ ] Provides `fetchFriends()` function
-- [ ] Provides `fetchPendingRequests()` function
-- [ ] Provides `sendFriendRequest(userId)` function
-- [ ] Provides `acceptRequest(friendshipId)` function
-- [ ] Provides `rejectRequest(friendshipId)` function
-- [ ] Provides `removeFriend(friendshipId)` function
-- [ ] Handles loading and error states
-
-**Think about:**
-
-- Should you fetch friends on mount?
-- How do you know when new friend requests arrive? (polling? websockets later?)
-- After accepting a request, should you move it from pending to friends array?
-
-**Helpful Resources:** Look at PostsContext (Colin) for similar pattern
-
----
-
-### ✅ Task 7: Build Friends Service Layer
-
-**Files:** `frontend/src/services/friendsService.js`
-
-**What:** Functions that make HTTP requests to friends API
-
-**Why:** Separates API logic from React components
-
-**Acceptance Criteria:**
-
-- [ ] `getFriends()` - Fetch accepted friendships
-- [ ] `getPendingRequests()` - Fetch incoming requests
-- [ ] `sendFriendRequest(userId)` - Send request
-- [ ] `acceptRequest(id)` - Accept request
-- [ ] `rejectRequest(id)` - Reject request
-- [ ] `removeFriend(id)` - Unfriend
-- [ ] All functions return response.data
-
-**Think about:**
-
-- Do you need to pass auth token? (No! apiClient handles it)
-- Should you handle errors or throw them?
-
-**Helpful Resources:** Uses apiClient.js (Tito)
-
----
-
-### ✅ Task 8: Build Friends Page UI
-
-**Files:** `Friends.jsx`, `Friends.scss`, `index.js`
-
-**What:** Page where users see their friends list and pending requests
-
-**Why:** Users need a centralized place to manage connections
-
-**Acceptance Criteria:**
-
-- [ ] Shows list of accepted friends with username, avatar
-- [ ] Shows "Remove Friend" button for each friend
-- [ ] Shows pending incoming requests in separate section
-- [ ] Shows "Accept" and "Reject" buttons for each request
-- [ ] Shows stats: "X connected, Y pending"
-- [ ] Calls FriendsContext functions for all actions
-- [ ] Styled using Pablo's design system (glass-card, neon-glow)
-- [ ] Responsive (looks good on mobile and desktop)
-
-**Think about:**
-
-- How do you distinguish between friends and pending requests in the UI?
-- Should you show who sent the request vs who received it?
-- What happens after accepting a request? (refetch friends list?)
-- Should there be a search/filter for large friend lists?
-
-**Helpful Resources:** Pablo's design system in `src/styles/`
+- [ ] Register Friendship and FriendRequest models
+- [ ] List display shows relevant fields
+- [ ] Can filter and search
 
 ---
 
@@ -236,47 +195,18 @@ You're building the Friends system - connections between users. You handle frien
 
 **You provide:**
 
-- Friends API endpoints
-- FriendsContext with `useFriends()` hook
-- Friends page UI
-- Friendship data format: `{ id, user1: {...}, user2: {...}, status, created_at }`
+- Friends API endpoints at `/api/friends/`
+- Friendship data (list of friends for a user)
+- Friend request management
 
 **You consume:**
 
 - User model (Natalia) - friendships link two users
-- apiClient.js (Tito) - for authenticated API calls
-- Pablo's design system - for Friends page styling
+- JWT auth (simplejwt) - all endpoints require authentication
 
 **Work with:**
 
-- **Natalia:** Your Friendship model references her User model
-- **Tito:** Your friendsService uses his apiClient
-- **Pablo:** His TopBar NotificationModal will consume your pendingRequests
-
----
-
-## Friendship Data Format
-
-Backend should return friendships in this format:
-
-```javascript
-{
-  id: 1,
-  user1: {
-    id: 5,
-    username: "alice",
-    profile_picture: "https://..."
-  },
-  user2: {
-    id: 7,
-    username: "bob",
-    profile_picture: "https://..."
-  },
-  status: "accepted",  // or "pending" or "rejected"
-  action_user: 5,  // ID of user who sent the request
-  created_at: "2024-12-19T10:00:00Z"
-}
-```
+- **Natalia:** Your models reference her User model via ForeignKey
 
 ---
 
@@ -287,10 +217,20 @@ Backend should return friendships in this format:
 - [ ] Cannot send request to yourself (should error)
 - [ ] Pending requests appear in recipient's pending list
 - [ ] Can accept friend request
-- [ ] Accepted friendship appears in both users' friends lists
-- [ ] Can reject friend request
-- [ ] Rejected request disappears from pending list
-- [ ] Can remove friend (unfriend)
-- [ ] Removed friendship disappears from friends list for both users
-- [ ] Friends page shows correct counts ("10 connected, 2 pending")
-- [ ] UI updates immediately after accepting/rejecting/removing
+- [ ] Accepted friendship creates TWO Friendship records
+- [ ] FriendRequest is DELETED after acceptance (not updated)
+- [ ] Can decline friend request (deletes request)
+- [ ] Can remove friend (deletes BOTH Friendship records)
+- [ ] Friend list shows correct data
+
+---
+
+## Fixture Data
+
+After running migrations, load the demo data:
+
+```bash
+python manage.py loaddata posts_and_users.json
+```
+
+This includes pre-created friendships between demo users.
