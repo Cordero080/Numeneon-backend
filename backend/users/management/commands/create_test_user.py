@@ -35,14 +35,42 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from users.models import Profile
 
+#===========================================
+# add a "delete_test_user" command to easily clean up database after testing
+#===========================================
+
 
 class Command(BaseCommand):
     help = 'Creates a test user for development'
 
     def handle(self, *args, **options):
-        # Your code here
-        pass
+        # 1. define test credentials - hard code for dev-only script
+        username = 'pabloPistola'
+        email = 'pablo@example.com'
+        password = 'test123'
 
+        # 2. check if user already exists before creating
+        user_exists = User.objects.filter(username=username).exists()
+        if not user_exists:
+            user = User.objects.create_user( # 3. create_user() hashes password
+                # and fills the last_login and date_joined fields that Postgres wants automatically
+                username=username,
+                email=email,
+                password=password
+            )
+            self.stdout.write(self.style.SUCCESS(f'User "{username}" created successfully.'))
+        else:
+            # if created is False, the user already in db grab the existing user object to use in profile creation
+            user = User.objects.get(username=username)
+            self.stdout.write(self.style.WARNING(f'User "{username}" already exists.'))
+
+        # 4.  profile sync - create or get existing profile
+        profile, created = Profile.objects.get_or_create(user=user)
+        if created:
+            self.stdout.write(self.style.SUCCESS(f'Profile created for user "{username}".'))
+        else:
+            self.stdout.write(self.style.SUCCESS(f'Profile for user "{username}" already exists.'))
+        
         self.stdout.write('')
         self.stdout.write(self.style.SUCCESS('=' * 50))
         self.stdout.write(self.style.SUCCESS('TEST USER READY!'))

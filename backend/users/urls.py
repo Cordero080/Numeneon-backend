@@ -32,5 +32,8 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from . import views
 
 urlpatterns = [
-    # Your code here
+    # path('signup/', views.signup, name='signup'),
+    # path('login/', views.email_login, name='login'),
+    # path('me/', views.current_user, name='current_user'),
+    # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
