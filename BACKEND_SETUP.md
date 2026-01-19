@@ -14,13 +14,16 @@ This guide will walk you through setting up the Huddl Django backend on your loc
 
 ---
 
-## 1. Clone the Team Repo
+## 1. Clone the Team Repo (from Czar)
 
-**Important:** Clone Colin's repository directly — do not fork it.
+**Important:** Clone Colin's repository (the "czar").
 
 ```bash
-git clone https://github.com/colinw10/huddl-app.git
-cd huddl-app
+git clone https://github.com/colinw10/Numeneon-backend.git
+cd Numeneon-backend
+
+# Add czar as a remote (for pulling updates later)
+git remote add czar https://github.com/colinw10/Numeneon-backend.git
 ```
 
 ---
@@ -42,63 +45,53 @@ git checkout -b yourname-feature
 Navigate into the backend directory:
 
 ```bash
-mkdir backend
 cd backend
 ```
 
+The backend folder already exists with all the Django apps.
+
 ---
 
-## 4. Create Virtual Environment
+## 4. Install Dependencies (USE PIPENV!)
 
-Set up a Python virtual environment to isolate dependencies:
+**⚠️ DO NOT use `pip install -r requirements.txt`** - This project uses Pipfile!
+
+Install all dependencies using pipenv:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+pipenv install --dev
+pipenv shell
 ```
 
-Your terminal prompt should now show `(venv)`.
+Your terminal prompt should now show `(venv)` or similar.
+
+This installs Django and all other required packages automatically from the Pipfile.
 
 ---
 
-## 5. Install Django
+## 5. Apply Migrations (WAIT FOR NATALIA!)
 
-Install Django inside your virtual environment:
+**⚠️ DO NOT run migrations until Natalia announces they are ready!**
 
-```bash
-pip install django
-django-admin --version
-```
-
-The version output confirms Django installed successfully.
-
----
-
-## 6. Create Django Project
-
-Initialize the Django project inside the `backend` folder:
+**Order of Operations:**
+1. Natalia creates migrations AFTER all models are implemented
+2. Natalia pushes migration files to czar
+3. Everyone pulls from czar: `git pull czar dev`
+4. Everyone runs migrations: `python manage.py migrate`
+5. Everyone loads seed data: `python manage.py loaddata posts_and_users.json`
 
 ```bash
-django-admin startproject huddl .
-```
-
-**Note:** The dot (`.`) prevents creating nested `huddl/huddl` folders.
-
----
-
-## 7. Apply Initial Migrations
-
-Run Django's initial database migrations:
-
-```bash
+# ONLY after Natalia pushes migrations:
+git pull czar dev
 python manage.py migrate
+python manage.py loaddata posts_and_users.json
 ```
 
-This initializes Django's built-in tables (users, sessions, etc.).
+This creates all database tables and loads shared test data.
 
 ---
 
-## 8. Run the Dev Server
+## 6. Run the Dev Server
 
 Start the development server:
 
@@ -112,7 +105,7 @@ Visit it in your browser to see Django's welcome page.
 
 ---
 
-## 9. Workflow Rules
+## 7. Workflow Rules
 
 ✅ **Do:**
 
@@ -137,11 +130,20 @@ Visit it in your browser to see Django's welcome page.
 ## Quick Reference
 
 ```bash
-# Activate virtual environment
-source venv/bin/activate
+# Install dependencies (NOT pip install -r requirements.txt!)
+pipenv install --dev
 
-# Run migrations
+# Activate virtual environment
+pipenv shell
+
+# Pull latest from czar
+git pull czar dev
+
+# Run migrations (ONLY after Natalia pushes them!)
 python manage.py migrate
+
+# Load seed data
+python manage.py loaddata posts_and_users.json
 
 # Start dev server
 python manage.py runserver

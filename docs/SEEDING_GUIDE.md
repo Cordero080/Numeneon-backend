@@ -55,21 +55,26 @@ git push
 Once Natalia has pushed migrations:
 
 ```bash
-# 1. Pull latest code (includes migration files)
-git pull
+# 1. Pull latest code from CZAR (includes migration files)
+git pull czar dev
 
 # 2. Go to backend folder
 cd backend
 
-# 3. Activate virtual environment
+# 3. Install dependencies (USE PIPENV, NOT requirements.txt!)
+pipenv install --dev
+
+# 4. Activate virtual environment
 pipenv shell
 
-# 4. Apply migrations (creates tables in YOUR database)
+# 5. Apply migrations (creates tables in YOUR database)
 python manage.py migrate
 
-# 5. Load the seed data (fills tables with data)
+# 6. Load the seed data (fills tables with data)
 python manage.py loaddata posts_and_users.json
 ```
+
+**⚠️ DO NOT run `pip install -r requirements.txt`** - This project uses Pipfile!
 
 **That's it!** You now have the same users and posts as everyone else.
 

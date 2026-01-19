@@ -72,28 +72,51 @@ backend/
 
 ## Quick Start
 
-### 1. Setup Environment
+### ⚠️ IMPORTANT: Read This First!
+
+**DO NOT run `pip install -r requirements.txt`** - This project uses **Pipfile** (pipenv), not requirements.txt!
+
+**DO NOT run `python manage.py migrate`** until Natalia announces migrations are ready!
+
+---
+
+### 1. Clone and Setup Remote
+
+```bash
+# Clone Colin's repo (the czar)
+git clone https://github.com/colinw10/Numeneon-backend.git
+cd Numeneon-backend
+
+# Add czar remote (if you forked instead)
+git remote add czar https://github.com/colinw10/Numeneon-backend.git
+```
+
+### 2. Setup Environment (Use Pipenv!)
 
 ```bash
 cd backend
-pipenv install
+pipenv install --dev    # NOT pip install -r requirements.txt!
 pipenv shell
 ```
 
-### 2. Database Setup
+### 3. Database Setup (WAIT FOR NATALIA!)
+
+**Order of Operations:**
+
+1. **Natalia** runs `makemigrations` + `migrate` AFTER all models are implemented
+2. **Natalia** commits migration files and pushes to czar
+3. **Everyone** pulls from czar: `git pull czar dev`
+4. **Everyone** runs migrations: `python manage.py migrate`
+5. **Everyone** loads seed data: `python manage.py loaddata posts_and_users.json`
 
 ```bash
-# Run migrations
+# ONLY after Natalia pushes migrations:
+git pull czar dev
 python manage.py migrate
-
-# Create admin account (for Django admin panel)
-python manage.py createsuperuser
-
-# Load demo data (REQUIRED for matching frontend!)
 python manage.py loaddata posts_and_users.json
 ```
 
-### 3. Run Development Server
+### 4. Run Development Server
 
 ```bash
 python manage.py runserver
@@ -209,6 +232,19 @@ class Profile(models.Model):
 ```
 
 Replace `pass` with actual implementation based on the TODO comments.
+
+---
+
+## Getting Updates from Czar
+
+Whenever Colin (czar) merges PRs, pull the latest:
+
+```bash
+git fetch czar
+git merge czar/dev
+# Or shortcut:
+git pull czar dev
+```
 
 ---
 
