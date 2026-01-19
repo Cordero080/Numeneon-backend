@@ -1,5 +1,234 @@
 [
 {
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$SHQBjlm9Xc9ePXMWua3BfM$e6XA58o3GZnlGzw6fKDZ1cHoe3MQbpYCaTJ3v2U+BC4=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "colinw",
+    "first_name": "Colin",
+    "last_name": "Weir",
+    "email": "colin@huddl.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:23:31.030Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$alyCRjMIlRp7US9pRtWpOY$Q9C81gmbOdP6cMiALMH/i3Dez3j7GEOTH98JYKBTw3I=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "crystalr",
+    "first_name": "Crystal",
+    "last_name": "Ruiz",
+    "email": "crystal@huddl.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:23:31.113Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$cZZ1gky7PE2veFPYdIeMpn$Owpor8AxvUwb+UcOIaZiD5pZzzZHdkam6DzIAaq8grI=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "tito",
+    "first_name": "Tito",
+    "last_name": "",
+    "email": "tito@huddl.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:23:31.193Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$C27dEHJF9hzh5VTwncAAYo$lsNgd9yIbs2htDmeRrVoQkV2H9QhBtnl4BT4gN7le8s=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "nataliap",
+    "first_name": "Natalia",
+    "last_name": "P",
+    "email": "natalia@huddl.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:23:31.274Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$r2U2eihadWEa8kGSLjyyk3$aDI9qP4XkDUpKL6HfBZkMGHITKo7Udb6VDV+uzLYW0Q=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "arthurb",
+    "first_name": "Arthur",
+    "last_name": "Bernier",
+    "email": "arthur@huddl.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:23:31.357Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$qRMkoAqh9gO8jzHRqGQmsu$I8LJBwWE5KtPGADRr2T3oLG/3CxnU4TzN/UfTUd9v0o=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "alexr",
+    "first_name": "Alex",
+    "last_name": "Rivera",
+    "email": "alex@huddl.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:23:31.435Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$30QtKACGSM1XZn3LtZVnB1$NVVTM/FL1TfoSH2AcAw6LVl2rQBMYQO2q9BTD4Dx2aY=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "jordanl",
+    "first_name": "Jordan",
+    "last_name": "Lee",
+    "email": "jordan@huddl.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:23:31.516Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 8,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$7AhoJtM0bohIdzFqf89BOR$zUpC2UI/6Ecmb5rfRCa1RNVDEXNr6mMvWLhU21Y54/o=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "samc",
+    "first_name": "Sam",
+    "last_name": "Chen",
+    "email": "sam@huddl.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-07T18:23:50.550Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 9,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$uwd84JgJNJd3aS2EueK3A3$ni2AbhswVs0yB4jViP+Pzr6xFj/6WDaRVa904O5Xrwg=",
+    "last_login": "2026-01-17T22:13:40.547Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@huddl.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-12-09T23:34:45.609Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 10,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$bT7fSvDzc8BtH8h8YbVMlu$Vew4wtVgOMZq2z9/5uj5xD2tgA6+LWk2Oek+bGkXK98=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "pabloPistola",
+    "first_name": "Pablo",
+    "last_name": "Cordero",
+    "email": "pablo@test.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-14T21:29:36.654Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 11,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$uqloFikYgCS1a89gi0Blpj$PkeMwXSznOh/rITr1DJSALJWmjFXRGaZ8oJrAaQKpi8=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "titod",
+    "first_name": "Tito",
+    "last_name": "Del Valle",
+    "email": "tito@test.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-12-23T22:36:41.818Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 12,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$9MHeHwlC1LQSRZLB2uAqMr$ObBrTUQvdlBBU4mNE0TT8fM6d5Gn4NVKfkUEdoFTPl8=",
+    "last_login": "2026-01-09T18:05:59Z",
+    "is_superuser": false,
+    "username": "ASI",
+    "first_name": "A",
+    "last_name": "I",
+    "email": "asi@real.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-01-09T18:04:04Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.profile",
+  "pk": 2,
+  "fields": {
+    "user": 10,
+    "bio": "you buy it, you break it",
+    "avatar": "",
+    "location": "Brooklyn, NY",
+    "website": "https://github.com/Cordero080",
+    "created_at": "2025-12-14T21:29:36.734Z",
+    "updated_at": "2025-12-14T21:29:36.734Z"
+  }
+},
+{
   "model": "posts.post",
   "pk": 575,
   "fields": {
@@ -121,8 +350,8 @@
     "media_url": null,
     "parent": null,
     "created_at": "2025-12-05T23:31:45.945Z",
-    "updated_at": "2025-12-23T23:31:45.945Z",
-    "likes_count": 288,
+    "updated_at": "2026-01-16T07:06:05.923Z",
+    "likes_count": 289,
     "comment_count": 33,
     "shares_count": 39
   }
@@ -1057,6 +1286,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 641,
+  "fields": {
+    "author": 1,
+    "content": "Downtown and want to argue about shows?",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2025-12-21T23:31:45.993Z",
+    "updated_at": "2025-12-23T23:31:45.993Z",
+    "likes_count": 683,
+    "comment_count": 89,
+    "shares_count": 53
+  }
+},
+{
+  "model": "posts.post",
   "pk": 642,
   "fields": {
     "author": 1,
@@ -1085,6 +1330,22 @@
     "likes_count": 535,
     "comment_count": 66,
     "shares_count": 76
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 644,
+  "fields": {
+    "author": 1,
+    "content": "The best code is code someone else can fix.",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2025-12-08T23:31:45.995Z",
+    "updated_at": "2025-12-23T23:31:45.995Z",
+    "likes_count": 220,
+    "comment_count": 36,
+    "shares_count": 22
   }
 },
 {
@@ -1121,6 +1382,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 647,
+  "fields": {
+    "author": 1,
+    "content": "Simple solutions work but shouldn't look lazy.",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2025-11-13T23:31:45.998Z",
+    "updated_at": "2025-12-23T23:31:45.998Z",
+    "likes_count": 600,
+    "comment_count": 69,
+    "shares_count": 69
+  }
+},
+{
+  "model": "posts.post",
   "pk": 648,
   "fields": {
     "author": 1,
@@ -1149,6 +1426,22 @@
     "likes_count": 673,
     "comment_count": 99,
     "shares_count": 76
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 650,
+  "fields": {
+    "author": 1,
+    "content": "Meetings could have been emails. All of them.",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2025-10-04T23:31:46Z",
+    "updated_at": "2025-12-23T23:31:46Z",
+    "likes_count": 360,
+    "comment_count": 54,
+    "shares_count": 35
   }
 },
 {
@@ -1185,6 +1478,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 653,
+  "fields": {
+    "author": 1,
+    "content": "Code review is just reading someone's diary.",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2025-08-05T23:31:46.003Z",
+    "updated_at": "2025-12-23T23:31:46.003Z",
+    "likes_count": 277,
+    "comment_count": 60,
+    "shares_count": 39
+  }
+},
+{
+  "model": "posts.post",
   "pk": 654,
   "fields": {
     "author": 1,
@@ -1213,6 +1522,22 @@
     "likes_count": 622,
     "comment_count": 114,
     "shares_count": 55
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 656,
+  "fields": {
+    "author": 1,
+    "content": "Agile is just organized chaos with sticky notes.",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2025-05-12T23:31:46.006Z",
+    "updated_at": "2025-12-23T23:31:46.006Z",
+    "likes_count": 165,
+    "comment_count": 11,
+    "shares_count": 16
   }
 },
 {
@@ -1249,6 +1574,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 659,
+  "fields": {
+    "author": 1,
+    "content": "Starting new role next week. Nervous energy.",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2025-02-11T23:31:46.008Z",
+    "updated_at": "2025-12-23T23:31:46.008Z",
+    "likes_count": 377,
+    "comment_count": 42,
+    "shares_count": 40
+  }
+},
+{
+  "model": "posts.post",
   "pk": 660,
   "fields": {
     "author": 1,
@@ -1281,6 +1622,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 662,
+  "fields": {
+    "author": 1,
+    "content": "First day at bootcamp. Everything is new.",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2024-12-25T23:31:46.011Z",
+    "updated_at": "2025-12-23T23:31:46.011Z",
+    "likes_count": 318,
+    "comment_count": 50,
+    "shares_count": 35
+  }
+},
+{
+  "model": "posts.post",
   "pk": 663,
   "fields": {
     "author": 2,
@@ -1293,6 +1650,22 @@
     "likes_count": 651,
     "comment_count": 104,
     "shares_count": 71
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 664,
+  "fields": {
+    "author": 2,
+    "content": "Osaka at night. Sensory overload philosophy.",
+    "type": "media",
+    "media_url": "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=1200",
+    "parent": null,
+    "created_at": "2025-12-20T23:31:46.013Z",
+    "updated_at": "2025-12-23T23:31:46.013Z",
+    "likes_count": 495,
+    "comment_count": 63,
+    "shares_count": 43
   }
 },
 {
@@ -1329,6 +1702,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 667,
+  "fields": {
+    "author": 2,
+    "content": "Seoul neon reflections. Every surface a screen.",
+    "type": "media",
+    "media_url": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=1200",
+    "parent": null,
+    "created_at": "2025-12-05T23:31:46.015Z",
+    "updated_at": "2025-12-23T23:31:46.015Z",
+    "likes_count": 366,
+    "comment_count": 38,
+    "shares_count": 31
+  }
+},
+{
+  "model": "posts.post",
   "pk": 668,
   "fields": {
     "author": 2,
@@ -1357,6 +1746,22 @@
     "likes_count": 239,
     "comment_count": 55,
     "shares_count": 36
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 670,
+  "fields": {
+    "author": 2,
+    "content": "Fiber optics. Light trapped running errands.",
+    "type": "media",
+    "media_url": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1200",
+    "parent": null,
+    "created_at": "2025-10-29T23:31:46.018Z",
+    "updated_at": "2025-12-23T23:31:46.018Z",
+    "likes_count": 175,
+    "comment_count": 10,
+    "shares_count": 20
   }
 },
 {
@@ -1393,6 +1798,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 673,
+  "fields": {
+    "author": 2,
+    "content": "Aurora spiral overhead. Corona magic.",
+    "type": "media",
+    "media_url": "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1200",
+    "parent": null,
+    "created_at": "2025-09-04T23:31:46.020Z",
+    "updated_at": "2025-12-23T23:31:46.020Z",
+    "likes_count": 218,
+    "comment_count": 49,
+    "shares_count": 29
+  }
+},
+{
+  "model": "posts.post",
   "pk": 674,
   "fields": {
     "author": 2,
@@ -1425,6 +1846,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 676,
+  "fields": {
+    "author": 2,
+    "content": "Rare blood-red aurora. Worth the wait.",
+    "type": "media",
+    "media_url": "https://images.unsplash.com/photo-1488866022504-f2584929ca5f?w=1200",
+    "parent": null,
+    "created_at": "2025-06-11T23:31:46.022Z",
+    "updated_at": "2025-12-23T23:31:46.022Z",
+    "likes_count": 509,
+    "comment_count": 84,
+    "shares_count": 67
+  }
+},
+{
+  "model": "posts.post",
   "pk": 677,
   "fields": {
     "author": 2,
@@ -1453,6 +1890,22 @@
     "likes_count": 136,
     "comment_count": 15,
     "shares_count": 6
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 679,
+  "fields": {
+    "author": 2,
+    "content": "Bioluminescence waves. Ocean glowing.",
+    "type": "media",
+    "media_url": "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=1200",
+    "parent": null,
+    "created_at": "2025-03-03T23:31:46.024Z",
+    "updated_at": "2025-12-23T23:31:46.024Z",
+    "likes_count": 372,
+    "comment_count": 41,
+    "shares_count": 20
   }
 },
 {
@@ -1505,22 +1958,6 @@
 },
 {
   "model": "posts.post",
-  "pk": 683,
-  "fields": {
-    "author": 11,
-    "content": "Brain left after hour 2. Fingers kept typing.",
-    "type": "thoughts",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-12-23T23:31:46.028Z",
-    "updated_at": "2026-01-07T19:00:43.528Z",
-    "likes_count": 584,
-    "comment_count": 73,
-    "shares_count": 47
-  }
-},
-{
-  "model": "posts.post",
   "pk": 684,
   "fields": {
     "author": 11,
@@ -1533,22 +1970,6 @@
     "likes_count": 723,
     "comment_count": 101,
     "shares_count": 61
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 686,
-  "fields": {
-    "author": 11,
-    "content": "Three coffees in. Jittery but functional.",
-    "type": "thoughts",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-12-13T23:31:46.030Z",
-    "updated_at": "2025-12-23T23:31:46.030Z",
-    "likes_count": 225,
-    "comment_count": 50,
-    "shares_count": 29
   }
 },
 {
@@ -1569,38 +1990,6 @@
 },
 {
   "model": "posts.post",
-  "pk": 688,
-  "fields": {
-    "author": 11,
-    "content": "First client signed. Accidentally a business.",
-    "type": "milestones",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-11-29T23:31:46.031Z",
-    "updated_at": "2025-12-23T23:31:46.031Z",
-    "likes_count": 669,
-    "comment_count": 72,
-    "shares_count": 78
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 689,
-  "fields": {
-    "author": 11,
-    "content": "Debugging is leaving angry comments for past me.",
-    "type": "thoughts",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-11-20T23:31:46.032Z",
-    "updated_at": "2025-12-23T23:31:46.032Z",
-    "likes_count": 276,
-    "comment_count": 45,
-    "shares_count": 39
-  }
-},
-{
-  "model": "posts.post",
   "pk": 690,
   "fields": {
     "author": 11,
@@ -1617,38 +2006,6 @@
 },
 {
   "model": "posts.post",
-  "pk": 691,
-  "fields": {
-    "author": 11,
-    "content": "Full-stack app done. Frontend talks to backend!",
-    "type": "milestones",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-10-24T23:31:46.033Z",
-    "updated_at": "2025-12-23T23:31:46.033Z",
-    "likes_count": 462,
-    "comment_count": 108,
-    "shares_count": 73
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 692,
-  "fields": {
-    "author": 11,
-    "content": "Stack Overflow copy-paste warrior. No shame.",
-    "type": "thoughts",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-10-06T23:31:46.034Z",
-    "updated_at": "2025-12-23T23:31:46.034Z",
-    "likes_count": 473,
-    "comment_count": 73,
-    "shares_count": 79
-  }
-},
-{
-  "model": "posts.post",
   "pk": 693,
   "fields": {
     "author": 11,
@@ -1660,38 +2017,6 @@
     "updated_at": "2025-12-23T23:31:46.035Z",
     "likes_count": 314,
     "comment_count": 35,
-    "shares_count": 33
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 694,
-  "fields": {
-    "author": 11,
-    "content": "Deployed to production. Didn't break.",
-    "type": "milestones",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-08-30T23:31:46.036Z",
-    "updated_at": "2025-12-23T23:31:46.036Z",
-    "likes_count": 635,
-    "comment_count": 60,
-    "shares_count": 58
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 695,
-  "fields": {
-    "author": 11,
-    "content": "npm install is just downloading the internet.",
-    "type": "thoughts",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-08-05T23:31:46.037Z",
-    "updated_at": "2025-12-23T23:31:46.037Z",
-    "likes_count": 371,
-    "comment_count": 42,
     "shares_count": 33
   }
 },
@@ -1713,38 +2038,6 @@
 },
 {
   "model": "posts.post",
-  "pk": 697,
-  "fields": {
-    "author": 11,
-    "content": "Git push without fear. Branching works.",
-    "type": "milestones",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-06-11T23:31:46.039Z",
-    "updated_at": "2025-12-23T23:31:46.039Z",
-    "likes_count": 236,
-    "comment_count": 56,
-    "shares_count": 38
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 698,
-  "fields": {
-    "author": 11,
-    "content": "Documentation is future me doing a favor.",
-    "type": "thoughts",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-05-12T23:31:46.040Z",
-    "updated_at": "2025-12-23T23:31:46.040Z",
-    "likes_count": 81,
-    "comment_count": 28,
-    "shares_count": 5
-  }
-},
-{
-  "model": "posts.post",
   "pk": 699,
   "fields": {
     "author": 11,
@@ -1761,38 +2054,6 @@
 },
 {
   "model": "posts.post",
-  "pk": 700,
-  "fields": {
-    "author": 11,
-    "content": "First merge conflict resolved. Battle won.",
-    "type": "milestones",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-03-13T23:31:46.041Z",
-    "updated_at": "2025-12-23T23:31:46.041Z",
-    "likes_count": 641,
-    "comment_count": 96,
-    "shares_count": 69
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 701,
-  "fields": {
-    "author": 11,
-    "content": "Variable naming is harder than the actual code.",
-    "type": "thoughts",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-02-11T23:31:46.042Z",
-    "updated_at": "2025-12-23T23:31:46.042Z",
-    "likes_count": 391,
-    "comment_count": 33,
-    "shares_count": 25
-  }
-},
-{
-  "model": "posts.post",
   "pk": 702,
   "fields": {
     "author": 11,
@@ -1805,38 +2066,6 @@
     "likes_count": 111,
     "comment_count": 14,
     "shares_count": 12
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 703,
-  "fields": {
-    "author": 11,
-    "content": "Wrote first function. It returned something!",
-    "type": "milestones",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2025-01-02T23:31:46.043Z",
-    "updated_at": "2025-12-23T23:31:46.043Z",
-    "likes_count": 455,
-    "comment_count": 85,
-    "shares_count": 69
-  }
-},
-{
-  "model": "posts.post",
-  "pk": 704,
-  "fields": {
-    "author": 11,
-    "content": "Started learning to code. No idea what awaits.",
-    "type": "thoughts",
-    "media_url": null,
-    "parent": null,
-    "created_at": "2024-12-25T23:31:46.044Z",
-    "updated_at": "2025-12-23T23:31:46.044Z",
-    "likes_count": 293,
-    "comment_count": 46,
-    "shares_count": 35
   }
 },
 {
@@ -1953,6 +2182,22 @@
 },
 {
   "model": "posts.post",
+  "pk": 715,
+  "fields": {
+    "author": 10,
+    "content": "Awesome shot. Can't wait to go to Japan. Be safe, have fun!",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": 664,
+    "created_at": "2026-01-05T01:46:12.139Z",
+    "updated_at": "2026-01-05T01:46:12.139Z",
+    "likes_count": 0,
+    "comment_count": 0,
+    "shares_count": 0
+  }
+},
+{
+  "model": "posts.post",
   "pk": 716,
   "fields": {
     "author": 10,
@@ -1977,8 +2222,8 @@
     "media_url": null,
     "parent": null,
     "created_at": "2026-01-07T06:17:02.683Z",
-    "updated_at": "2026-01-07T19:43:07.860Z",
-    "likes_count": 0,
+    "updated_at": "2026-01-16T07:01:32.925Z",
+    "likes_count": 1,
     "comment_count": 0,
     "shares_count": 0
   }
@@ -1993,7 +2238,7 @@
     "media_url": null,
     "parent": null,
     "created_at": "2026-01-07T06:17:16.783Z",
-    "updated_at": "2026-01-07T06:19:26.739Z",
+    "updated_at": "2026-01-17T20:17:11.993Z",
     "likes_count": 1,
     "comment_count": 0,
     "shares_count": 0
@@ -2185,8 +2430,8 @@
     "media_url": null,
     "parent": null,
     "created_at": "2026-01-09T18:18:50.662Z",
-    "updated_at": "2026-01-09T18:18:50.662Z",
-    "likes_count": 0,
+    "updated_at": "2026-01-18T23:22:12.096Z",
+    "likes_count": 1,
     "comment_count": 0,
     "shares_count": 0
   }
@@ -2217,7 +2462,7 @@
     "media_url": null,
     "parent": null,
     "created_at": "2026-01-09T18:19:37.498Z",
-    "updated_at": "2026-01-09T18:19:37.498Z",
+    "updated_at": "2026-01-17T20:28:26.795Z",
     "likes_count": 0,
     "comment_count": 0,
     "shares_count": 0
@@ -2233,8 +2478,8 @@
     "media_url": "https://cdn.midjourney.com/501ffca6-78b2-4c2c-8b8a-7a6d1cde4bd1/0_2.png",
     "parent": null,
     "created_at": "2026-01-09T18:20:10.793Z",
-    "updated_at": "2026-01-10T01:15:27.043Z",
-    "likes_count": 0,
+    "updated_at": "2026-01-16T07:03:15.708Z",
+    "likes_count": 1,
     "comment_count": 0,
     "shares_count": 0
   }
@@ -2249,7 +2494,119 @@
     "media_url": "https://lift.opensnow.com/media-images/166619071283b5009e040969ee7b60362ad7426573.jpeg",
     "parent": null,
     "created_at": "2026-01-10T01:12:01.104Z",
-    "updated_at": "2026-01-10T01:17:54.887Z",
+    "updated_at": "2026-01-16T07:14:26.221Z",
+    "likes_count": 1,
+    "comment_count": 0,
+    "shares_count": 0
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 735,
+  "fields": {
+    "author": 10,
+    "content": "Sure",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": 718,
+    "created_at": "2026-01-17T03:18:39.465Z",
+    "updated_at": "2026-01-17T03:18:39.465Z",
+    "likes_count": 0,
+    "comment_count": 0,
+    "shares_count": 0
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 736,
+  "fields": {
+    "author": 10,
+    "content": "Here",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": null,
+    "created_at": "2026-01-17T03:21:31.979Z",
+    "updated_at": "2026-01-17T20:19:06.380Z",
+    "likes_count": 1,
+    "comment_count": 0,
+    "shares_count": 0
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 737,
+  "fields": {
+    "author": 10,
+    "content": "true",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": 732,
+    "created_at": "2026-01-17T03:22:22.566Z",
+    "updated_at": "2026-01-17T03:22:22.566Z",
+    "likes_count": 0,
+    "comment_count": 0,
+    "shares_count": 0
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 738,
+  "fields": {
+    "author": 10,
+    "content": "Post should be seen here",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": 718,
+    "created_at": "2026-01-17T03:25:40.613Z",
+    "updated_at": "2026-01-17T03:25:40.613Z",
+    "likes_count": 0,
+    "comment_count": 0,
+    "shares_count": 0
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 739,
+  "fields": {
+    "author": 10,
+    "content": "I don't see my previous post",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": 718,
+    "created_at": "2026-01-17T03:25:49.183Z",
+    "updated_at": "2026-01-17T03:25:49.183Z",
+    "likes_count": 0,
+    "comment_count": 0,
+    "shares_count": 0
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 740,
+  "fields": {
+    "author": 10,
+    "content": "Here",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": 736,
+    "created_at": "2026-01-17T03:41:57.328Z",
+    "updated_at": "2026-01-17T03:41:57.328Z",
+    "likes_count": 0,
+    "comment_count": 0,
+    "shares_count": 0
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 741,
+  "fields": {
+    "author": 10,
+    "content": "ok",
+    "type": "thoughts",
+    "media_url": null,
+    "parent": 734,
+    "created_at": "2026-01-17T03:42:22.223Z",
+    "updated_at": "2026-01-17T03:42:22.223Z",
     "likes_count": 0,
     "comment_count": 0,
     "shares_count": 0
@@ -2311,24 +2668,6 @@
 },
 {
   "model": "posts.like",
-  "pk": 142,
-  "fields": {
-    "user": 10,
-    "post": 718,
-    "created_at": "2026-01-07T06:19:26.738Z"
-  }
-},
-{
-  "model": "posts.like",
-  "pk": 144,
-  "fields": {
-    "user": 10,
-    "post": 683,
-    "created_at": "2026-01-07T19:00:43.527Z"
-  }
-},
-{
-  "model": "posts.like",
   "pk": 154,
   "fields": {
     "user": 10,
@@ -2337,219 +2676,66 @@
   }
 },
 {
-  "model": "auth.user",
-  "pk": 1,
+  "model": "posts.like",
+  "pk": 155,
   "fields": {
-    "password": "pbkdf2_sha256$1000000$SHQBjlm9Xc9ePXMWua3BfM$e6XA58o3GZnlGzw6fKDZ1cHoe3MQbpYCaTJ3v2U+BC4=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "colinw",
-    "first_name": "Colin",
-    "last_name": "Weir",
-    "email": "colin@huddl.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-07T18:23:31.030Z",
-    "groups": [],
-    "user_permissions": []
+    "user": 10,
+    "post": 717,
+    "created_at": "2026-01-16T07:01:32.923Z"
   }
 },
 {
-  "model": "auth.user",
-  "pk": 2,
+  "model": "posts.like",
+  "pk": 159,
   "fields": {
-    "password": "pbkdf2_sha256$1000000$alyCRjMIlRp7US9pRtWpOY$Q9C81gmbOdP6cMiALMH/i3Dez3j7GEOTH98JYKBTw3I=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "crystalr",
-    "first_name": "Crystal",
-    "last_name": "Ruiz",
-    "email": "crystal@huddl.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-07T18:23:31.113Z",
-    "groups": [],
-    "user_permissions": []
+    "user": 10,
+    "post": 733,
+    "created_at": "2026-01-16T07:03:15.706Z"
   }
 },
 {
-  "model": "auth.user",
-  "pk": 3,
+  "model": "posts.like",
+  "pk": 169,
   "fields": {
-    "password": "pbkdf2_sha256$1000000$cZZ1gky7PE2veFPYdIeMpn$Owpor8AxvUwb+UcOIaZiD5pZzzZHdkam6DzIAaq8grI=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "tito",
-    "first_name": "Tito",
-    "last_name": "",
-    "email": "tito@huddl.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-07T18:23:31.193Z",
-    "groups": [],
-    "user_permissions": []
+    "user": 10,
+    "post": 582,
+    "created_at": "2026-01-16T07:06:05.922Z"
   }
 },
 {
-  "model": "auth.user",
-  "pk": 4,
+  "model": "posts.like",
+  "pk": 172,
   "fields": {
-    "password": "pbkdf2_sha256$1000000$C27dEHJF9hzh5VTwncAAYo$lsNgd9yIbs2htDmeRrVoQkV2H9QhBtnl4BT4gN7le8s=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "nataliap",
-    "first_name": "Natalia",
-    "last_name": "P",
-    "email": "natalia@huddl.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-07T18:23:31.274Z",
-    "groups": [],
-    "user_permissions": []
+    "user": 10,
+    "post": 734,
+    "created_at": "2026-01-16T07:14:26.220Z"
   }
 },
 {
-  "model": "auth.user",
-  "pk": 5,
+  "model": "posts.like",
+  "pk": 174,
   "fields": {
-    "password": "pbkdf2_sha256$1000000$r2U2eihadWEa8kGSLjyyk3$aDI9qP4XkDUpKL6HfBZkMGHITKo7Udb6VDV+uzLYW0Q=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "arthurb",
-    "first_name": "Arthur",
-    "last_name": "Bernier",
-    "email": "arthur@huddl.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-07T18:23:31.357Z",
-    "groups": [],
-    "user_permissions": []
+    "user": 10,
+    "post": 718,
+    "created_at": "2026-01-17T20:17:11.992Z"
   }
 },
 {
-  "model": "auth.user",
-  "pk": 6,
+  "model": "posts.like",
+  "pk": 176,
   "fields": {
-    "password": "pbkdf2_sha256$1000000$qRMkoAqh9gO8jzHRqGQmsu$I8LJBwWE5KtPGADRr2T3oLG/3CxnU4TzN/UfTUd9v0o=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "alexr",
-    "first_name": "Alex",
-    "last_name": "Rivera",
-    "email": "alex@huddl.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-07T18:23:31.435Z",
-    "groups": [],
-    "user_permissions": []
+    "user": 10,
+    "post": 736,
+    "created_at": "2026-01-17T20:19:06.378Z"
   }
 },
 {
-  "model": "auth.user",
-  "pk": 7,
+  "model": "posts.like",
+  "pk": 178,
   "fields": {
-    "password": "pbkdf2_sha256$1000000$30QtKACGSM1XZn3LtZVnB1$NVVTM/FL1TfoSH2AcAw6LVl2rQBMYQO2q9BTD4Dx2aY=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "jordanl",
-    "first_name": "Jordan",
-    "last_name": "Lee",
-    "email": "jordan@huddl.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-07T18:23:31.516Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 8,
-  "fields": {
-    "password": "pbkdf2_sha256$1000000$7AhoJtM0bohIdzFqf89BOR$zUpC2UI/6Ecmb5rfRCa1RNVDEXNr6mMvWLhU21Y54/o=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "samc",
-    "first_name": "Sam",
-    "last_name": "Chen",
-    "email": "sam@huddl.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-07T18:23:50.550Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 9,
-  "fields": {
-    "password": "pbkdf2_sha256$1000000$uwd84JgJNJd3aS2EueK3A3$ni2AbhswVs0yB4jViP+Pzr6xFj/6WDaRVa904O5Xrwg=",
-    "last_login": "2026-01-09T17:49:52.014Z",
-    "is_superuser": true,
-    "username": "admin",
-    "first_name": "",
-    "last_name": "",
-    "email": "admin@huddl.com",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2025-12-09T23:34:45.609Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 10,
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$w7ZJGYA6lLPxZxa5IrfvKM$yalznrJKbn4XNKxckmOVeWoEnVZPxwEaeLKzGF+Ctt0=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "pabloPistola",
-    "first_name": "Pablo",
-    "last_name": "Cordero",
-    "email": "pablo@test.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-14T21:29:36.654Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 11,
-  "fields": {
-    "password": "pbkdf2_sha256$1000000$uqloFikYgCS1a89gi0Blpj$PkeMwXSznOh/rITr1DJSALJWmjFXRGaZ8oJrAaQKpi8=",
-    "last_login": null,
-    "is_superuser": false,
-    "username": "titod",
-    "first_name": "Tito",
-    "last_name": "Del Valle",
-    "email": "tito@test.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2025-12-23T22:36:41.818Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 12,
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$9MHeHwlC1LQSRZLB2uAqMr$ObBrTUQvdlBBU4mNE0TT8fM6d5Gn4NVKfkUEdoFTPl8=",
-    "last_login": "2026-01-09T18:05:59Z",
-    "is_superuser": false,
-    "username": "ASI",
-    "first_name": "A",
-    "last_name": "I",
-    "email": "asi@real.com",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-01-09T18:04:04Z",
-    "groups": [],
-    "user_permissions": []
+    "user": 10,
+    "post": 730,
+    "created_at": "2026-01-18T23:22:12.091Z"
   }
 }
 ]
