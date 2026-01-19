@@ -66,53 +66,51 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Profile
 
-
+# Actuan-based Serializers (manual control)
+# serializers.serializer taking input (Email) and returning output (tokens)
 class EmailLoginSerializer(serializers.Serializer):
-    """
-    TODO: Custom login serializer that accepts email + password
-    Returns JWT access and refresh tokens.
-    
-    Fields:
-    - email: EmailField
-    - password: CharField (write_only=True!)
-    
-    In validate(self, data):
-    1. Get email and password from data
-    2. Look up user by email (User.objects.get(email=email))
-    3. Authenticate with username (Django auth uses username internally)
-    4. If authentication fails, raise ValidationError
-    5. Check user.is_active
-    6. Generate tokens: refresh = RefreshToken.for_user(user)
-    7. Return { 'access': str(refresh.access_token), 'refresh': str(refresh) }
-    
-    Hint: authenticate(username=user.username, password=password)
-    """
-    # Your code here
-    pass
+    # get emai and password fields
+    # what is Serializer expects from frontend (React)
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True) # True to avoid password is never sent back in a JSON response
+    # look up user by email and authenticate = security check
+    def validate(self, data):
+        email = data.get('email')
+        password = data.get('password')
+        try:
+            user = User.objects.get(email=email) # fetch user by email first
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Invalid email or password.")
+        # authenticate with username
+        user = authenticate(username=user.username, password=password)
+        # # authenticate() checks the hashed password in the DB against the raw input
+        if user is None:
+            raise serializers.ValidationError("Invalid email or password.")
+        if not user.is_active:
+            raise serializers.ValidationError("User account is disabled.")
+        # generate JWT tokens
+        refresh = RefreshToken.for_user(user) # user is legit, give tokens
+        return {
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+        }
 
-
+# Model-based Serializers (automatic control)
+# using ModelSerializer because we are serializing Django models directly
 class UserSerializer(serializers.ModelSerializer):
-    """
-    TODO: Basic user data serializer
-    
     class Meta:
         model = User
+        # specify fields to include in serialized output
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'date_joined']
-    """
-    # Your code here
-    pass
 
-
+# Profile Serializer with nested UserSerializer (russian doll approach)
 class ProfileSerializer(serializers.ModelSerializer):
-    """
-    TODO: Profile serializer with nested user
-    
-    - user = UserSerializer(read_only=True)  # Nested, not editable
-    
+    # This is "Nesting". We tell Django: "When you show a Profile, 
+    # use the UserSerializer logic to show the owner's details too."
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Profile
+        # specify fields to include in serialized output
         fields = ['id', 'user', 'bio', 'avatar', 'location', 'website', 'created_at', 'updated_at']
+        # specify fields that are read-only and user cannot modify
         read_only_fields = ['created_at', 'updated_at']
-    """
-    # Your code here
-    pass
