@@ -72,6 +72,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from .models import Profile
 from .serializers import ProfileSerializer
+from .serializers import EmailLoginSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class ProfileViewSet(viewsets.ModelViewSet):
     """
@@ -83,11 +85,18 @@ class ProfileViewSet(viewsets.ModelViewSet):
     
     Hint: serializer.save(user=self.request.user)
     """
-    # Your code here
-    pass
+    # handles CRUD for Profile model. Only users can create/edit their own profiles.
+    queryset = Profile.objects.all() # grab all profiles
+    serializer_class = ProfileSerializer # use ProfileSerializer for serialization
+    permission_classes = [IsAuthenticated] # Only logged-in users can access
 
-@api_view(['POST'])
-@permission_classes([AllowAny])
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Assign logged-in user as profile owner
+
+
+@api_view(['POST']) 
+@permission_classes([AllowAny]) # Allow anyone to access signup
+# this is a POST view where we manually create User and their associated Profile
 def signup(request):
     """
     TODO: Create new user account
@@ -105,8 +114,42 @@ def signup(request):
     Hint: User.objects.create_user(username=..., email=..., password=..., first_name=..., last_name=...)
     Hint: Profile.objects.create(user=user)
     """
-    # Your code here
-    pass
+    # destructure request data
+    data = request.data
+    username = data.get('username')
+    display_name = data.get('display_name', '')
+    email = data.get('email')
+    password = data.get('password')
+    # validate required fields
+    if not all([username, email, password]):
+        return Response({'error': 'Missing required fields.'}, status=status.HTTP_400_BAD_REQUEST)
+    if User.objects.filter(username=username).exists():
+        return Response({'error': 'Username already taken.'}, status=status.HTTP_400_BAD_REQUEST)
+    if User.objects.filter(email=email).exists():
+        return Response({'error': 'Email already registered.'}, status=status.HTTP_400_BAD_REQUEST)
+    # parse display_name
+    name_parts = display_name.split(' ', 1)
+    first_name = name_parts[0]
+    last_name = name_parts[1] if len(name_parts) > 1 else ''
+    # create user
+    user = User.objects.create_user(
+        username=username,
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name
+    )
+    # create profile
+    profile = Profile.objects.create(user=user)
+    # return success response
+    return Response({'message': 'User created successfully.', 'user': {
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'profile': ProfileSerializer(profile).data
+    }}, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
@@ -124,12 +167,19 @@ def email_login(request):
     Hint: Use EmailLoginSerializer - it does the heavy lifting
     Hint: serializer.errors has the validation errors
     """
-    # Your code here
-    pass
+    serializer = EmailLoginSerializer(data=request.data)
+    if serializer.is_valid():
+        # the serializers handles the authentications and token generation
+        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+    else: # if credentials are invalid
+        error_msg = serializer.errors.get('non_field_errors', ['Invalid credentials.'])[0]
+        return Response({'error': error_msg}, status=status.HTTP_401_UNAUTHORIZED)
+    # skipping usernames and using email. This uses a custom serializer to handle that, imported in serializers.py
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated]) # only logged-in users can access
+# this is  the 'who am I' endpoint returning current user info. The frontend hits this on refresh to see if the stored token is still valid.
 def current_user(request):
     """
     TODO: Return currently logged-in user's info
@@ -143,5 +193,18 @@ def current_user(request):
     Hint: Profile might not exist - use try/except
     Hint: ProfileSerializer(profile).data for serialization
     """
-    # Your code here
-    pass
+    user = request.user # populated by JWT middleware
+    try:
+        # fetch the profile, use sterializer to get the nested data
+        profile_data = ProfileSerializer(user.profile).data
+    except Profile.DoesNotExist:
+        profile_data = None
+    # return user data with nested profile
+    return Response({
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'profile': profile_data
+    })

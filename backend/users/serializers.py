@@ -65,6 +65,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Profile
+from .serializers import EmailLoginSerializer
 
 # Actuan-based Serializers (manual control)
 # serializers.serializer taking input (Email) and returning output (tokens)
