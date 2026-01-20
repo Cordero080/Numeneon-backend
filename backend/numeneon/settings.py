@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',  # JWT authentication
     'corsheaders',  # <-- Added for CORS
     # Custom apps
-    'users',
+    'users.apps.UsersConfig',
     'posts',
     'friends',
 ]

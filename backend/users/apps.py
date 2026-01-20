@@ -15,4 +15,6 @@ class UsersConfig(AppConfig):
     name = 'users'
 
     # Optional: Add ready() method if using signals for auto-creating profiles
+    def ready(self):
+        import users.signals # tells Django to listen for events
 
