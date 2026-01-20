@@ -25,7 +25,7 @@ urlpatterns = [
 
     # TODO (Natalia): Add users/auth URLs
     # Uncomment and verify after implementing users/urls.py:
-    # path('api/auth/', include('users.urls')),
+    path('api/auth/', include('users.urls')),
 
     # TODO (Colin): Add posts URLs
     # Uncomment and verify after implementing posts/urls.py:
