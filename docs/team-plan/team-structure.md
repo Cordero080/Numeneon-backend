@@ -99,22 +99,25 @@ pipenv install --dev    # NOT pip install -r requirements.txt!
 pipenv shell
 ```
 
-### 3. Database Setup (WAIT FOR NATALIA!)
+### 3. Database Setup
 
-**Order of Operations:**
+**⚠️ IMPORTANT: See [../seedUsers/SEEDING_STEPS.md](../seedUsers/SEEDING_STEPS.md) for detailed seeding instructions!**
 
-1. **Natalia** runs `makemigrations` + `migrate` AFTER all models are implemented
-2. **Natalia** commits migration files and pushes to czar
-3. **Everyone** pulls from czar: `git pull czar dev`
-4. **Everyone** runs migrations: `python manage.py migrate`
-5. **Everyone** loads seed data: `python manage.py loaddata posts_and_users.json`
+**Quick Setup:**
 
 ```bash
-# ONLY after Natalia pushes migrations:
-git pull czar dev
+# Drop and recreate database (fresh start)
+psql -c "DROP DATABASE numeneon;"
+psql -c "CREATE DATABASE numeneon;"
+
+# Run migrations
 python manage.py migrate
-python manage.py loaddata posts_and_users.json
+
+# Load seed data (use the filtered version without profiles)
+python manage.py loaddata posts_and_users_noprofiles.json
 ```
+
+**Note:** The signal in `users/signals.py` auto-creates profiles when users are loaded. The seed file must have profiles stripped out to avoid duplicate key errors. See [../seedUsers/ERRORS_ENCOUNTERED.md](../seedUsers/ERRORS_ENCOUNTERED.md) for details.
 
 ### 4. Run Development Server
 
@@ -270,3 +273,28 @@ See detailed instructions for each team member:
 - [natalia.md](./natalia.md) - Users/Auth system
 - [colin.md](./colin.md) - Posts system
 - [crystal.md](./crystal.md) - Friends system
+
+---
+
+## Current Status (Jan 2026)
+
+### ✅ Completed
+
+- All models implemented (Users, Posts, Friends)
+- All serializers working
+- All views functional
+- All URL routes configured
+- Database migrated to PostgreSQL
+- Seed data working (with signal fix)
+- Admin interface configured
+
+### ⚠️ Known Issues Resolved
+
+- **Signal conflict**: `users/signals.py` now uses `get_or_create()` to avoid duplicate profiles during seeding
+- **URL routes**: All routes uncommented in `numeneon/urls.py`
+- **Friendships**: Must be created manually after seeding (not in seed data)
+
+### 📁 Documentation
+
+- [seedUsers/ERRORS_ENCOUNTERED.md](../seedUsers/ERRORS_ENCOUNTERED.md) - All seeding errors and fixes
+- [seedUsers/SEEDING_STEPS.md](../seedUsers/SEEDING_STEPS.md) - Updated seeding instructions

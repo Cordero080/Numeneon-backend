@@ -27,7 +27,7 @@
 #   make users      → lists all users in database
 #
 # NOTE: You MUST type "make" before every shortcut. The shortcut alone won't work.
-#       ✅ Correct: make b
+#       ✅ Correct:
 #       ❌ Wrong:   b
 #
 # IMPORTANT: The indentation before commands MUST be a TAB, not spaces!
