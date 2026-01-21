@@ -29,11 +29,11 @@ urlpatterns = [
 
     # TODO (Colin): Add posts URLs
     # Uncomment and verify after implementing posts/urls.py:
-    # path('api/posts/', include('posts.urls')),
+    path('api/posts/', include('posts.urls')),
 
     # TODO (Crystal): Add friends URLs
     # Uncomment and verify after implementing friends/urls.py:
-    # path('api/friends/', include('friends.urls')),
+    path('api/friends/', include('friends.urls')),
 ]
 
 # Serve media files in development
