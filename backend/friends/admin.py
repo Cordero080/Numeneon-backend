@@ -1,23 +1,23 @@
 # 🟣 CRYSTAL - Friends System Lead
 # admin.py - Django admin interface for managing friendships
 """
-TODO: Register Friends models with Django admin
-
-Register both Friendship and FriendRequest models.
-Useful for debugging friend connections.
-
-Optional enhancements:
-- list_display: Show columns in list view
-- list_filter: Filter by created_at
-- search_fields: Search by user__username, friend__username
-- ordering: Sort by -created_at
-
-Hint: admin.site.register(Friendship)
-Hint: admin.site.register(FriendRequest)
-Hint: Or use @admin.register decorator with ModelAdmin class
+Register Friends models with Django admin
 """
 
 from django.contrib import admin
 from .models import Friendship, FriendRequest
 
-# Your code here
+@admin.register(Friendship)
+class FriendshipAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'friend', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('user__username', 'friend__username')
+    ordering = ('created_at',)
+
+
+@admin.register(FriendRequest)
+class FriendRequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'from_user', 'to_user', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('from_user__username', 'to_user__username')
+    ordering = ('-created_at',)
