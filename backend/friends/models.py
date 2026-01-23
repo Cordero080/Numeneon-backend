@@ -25,10 +25,10 @@ class Friendship(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ( 'user', 'friend')
+        unique_together = ('user', 'friend')
         ordering = ['-created_at']
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.user.username} -> {self.friend.username}"
 
 
@@ -49,11 +49,11 @@ class FriendRequest(models.Model):
       on_delete=models.CASCADE,
       related_name='received_requests'
     )
-    created_at = models.DateTimeFiel(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('from_user', 'to_user')
         ordering = ['-created_at']
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.from_user.username} -> {self.to_user.username}"

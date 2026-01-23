@@ -20,7 +20,7 @@ def friend_list(request):
     """
     user = request.user
 
-    frienships = Friendship.objects.filter(user=user)
+    friendships = Friendship.objects.filter(user=user)
 
     friends = []
     for fs in friendships:
@@ -70,26 +70,26 @@ def send_request(request, user_id):
     """
     from_user = request.user
 
-    try: 
+    try:
         to_user = User.objects.get(id=user_id)
-        except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        if from_user == to_user:
-            return Response({'error': 'You cannot friend yourself'}, status=status.HTTP_400_BAD_REQUEST)
+    if from_user == to_user:
+        return Response({'error': 'You cannot friend yourself'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if FriendRequest.objects.filter(from_user=from_user, to_user=to_user).exists():
-            return Response({'error': 'Friend request already sent'}, status=status.HTTP_400_BAD_REQUEST)
+    if FriendRequest.objects.filter(from_user=from_user, to_user=to_user).exists():
+        return Response({'error': 'Friend request already sent'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if Friendship.objects.filter(user=from_user, friend=to_user).exists():
-            return Response({'error':'You are already friends'}, status=status.HTTP_400_BAD_REQUEST)
+    if Friendship.objects.filter(user=from_user, friend=to_user).exists():
+        return Response({'error': 'You are already friends'}, status=status.HTTP_400_BAD_REQUEST)
 
-        FriendRequest.objects.create(
-            from_user=from_user,
-            to_user=to_user
-        )
+    FriendRequest.objects.create(
+        from_user=from_user,
+        to_user=to_user
+    )
 
-        return Response({'message': 'Friend request sent'}, status=status.HTTP_201_CREATED)
+    return Response({'message': 'Friend request sent'}, status=status.HTTP_201_CREATED)
  
 
 
@@ -107,9 +107,9 @@ def accept_request(request, request_id):
         return Response({'error': 'Request not found'}, status=status.HTTP_404_NOT_FOUND)
 
     if fr.to_user != user:
-        return Response({'error': 'Not authorized', status=status.HTTP_403_FORBIDDEN})
+        return Response({'error': 'Not authorized'}, status=status.HTTP_403_FORBIDDEN)
 
-    Friendship.object.create(user=user, friend=fr.from_user)
+    Friendship.objects.create(user=user, friend=fr.from_user)
     Friendship.objects.create(user=fr.from_user, friend=user)
 
     fr.delete()
@@ -118,7 +118,7 @@ def accept_request(request, request_id):
         'message': 'Friend request accepted',
         'friend': {
             'id': fr.from_user.id,
-            'usename': fr.from_user.username,
+            'username': fr.from_user.username,
             'first_name': fr.from_user.first_name,
             'last_name': fr.from_user.last_name
         }
@@ -144,6 +144,25 @@ def decline_request(request, request_id):
     fr.delete()
 
     return Response({'message': 'Friend request declined'}, status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def remove_friend(request, user_id):
+    """
+    Removes a friend from your friend list
+    """
+    me = request.user
+
+    try:
+        target = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    Friendship.objects.filter(user=me, friend=target).delete()
+    Friendship.objects.filter(user=target, friend=me).delete()
+
+    return Response({'message': 'Friend removed'}, status=status.HTTP_200_OK)
 
 
 @api_view(['DELETE'])

@@ -6,5 +6,6 @@ from .models import Profile                  # You'll import your Profile model 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        print(f"✅ Signal triggered: Creating profile for {instance.username}")
-        Profile.objects.create(user=instance)
+        # Use get_or_create to avoid duplicates when loading fixtures
+        Profile.objects.get_or_create(user=instance)
+        print(f"✅ Signal triggered: Profile ready for {instance.username}")

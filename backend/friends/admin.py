@@ -7,7 +7,7 @@ Register Friends models with Django admin
 from django.contrib import admin
 from .models import Friendship, FriendRequest
 
-@admin.register(Frindship)
+@admin.register(Friendship)
 class FriendshipAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'friend', 'created_at')
     list_filter = ('created_at',)

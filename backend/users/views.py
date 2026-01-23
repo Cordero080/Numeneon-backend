@@ -139,8 +139,8 @@ def signup(request):
         first_name=first_name,
         last_name=last_name
     )
-    # create profile
-    profile = Profile.objects.create(user=user)
+    # get profile (signal already creates it via get_or_create)
+    profile = user.profile
     # return success response
     return Response({'message': 'User created successfully.', 'user': {
         'id': user.id,
