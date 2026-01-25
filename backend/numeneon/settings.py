@@ -140,9 +140,10 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://numeneon-frontend.*\.vercel\.app$",
     r"^https://numeneon-frontend-.*\.vercel\.app$",
 ]
-CORS_ALLOW_CREDENTIALS = True
+# JWT goes in Authorization header, not cookies - no credentials needed
+CORS_ALLOW_CREDENTIALS = False
 
-# REST Framework settings
+# REST Framework settings - JWT only, no session auth = no CSRF needed
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
