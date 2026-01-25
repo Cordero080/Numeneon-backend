@@ -1,5 +1,14 @@
 # Backend Architecture Documentation
 
+## 🌐 Deployment
+
+| Component         | URL                                   |
+| ----------------- | ------------------------------------- |
+| Backend (Render)  | https://numeneon-backend.onrender.com |
+| Frontend (Vercel) | https://numeneon-frontend.vercel.app  |
+
+---
+
 ## 📁 Contents
 
 | File                                     | Purpose                                 |

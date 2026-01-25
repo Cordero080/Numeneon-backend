@@ -6,19 +6,19 @@
 
 ## 📁 Contents
 
-| File                          | Purpose                              |
-| ----------------------------- | ------------------------------------ |
+| File                                           | Purpose                        |
+| ---------------------------------------------- | ------------------------------ |
 | [cors-configuration.md](cors-configuration.md) | CORS setup for Vercel ↔ Render |
 
 ---
 
 ## Deployment Stack
 
-| Component | Platform | URL |
-| --------- | -------- | --- |
-| Frontend  | Vercel   | https://numeneon-frontend.vercel.app |
-| Backend   | Render   | TBD |
-| Database  | PostgreSQL (Render) | Internal |
+| Component | Platform            | URL                                  |
+| --------- | ------------------- | ------------------------------------ |
+| Frontend  | Vercel              | https://numeneon-frontend.vercel.app |
+| Backend   | Render              | TBD                                  |
+| Database  | PostgreSQL (Render) | Internal                             |
 
 ---
 
@@ -30,8 +30,8 @@ The React frontend on Vercel makes API calls to the Django backend on Render. CO
 
 ### Environment Differences
 
-| Setting | Development | Production |
-| ------- | ----------- | ---------- |
-| CORS | `localhost:5173`, `localhost:3000` | `numeneon-frontend.vercel.app` |
-| DEBUG | `True` | `False` |
-| Database | Local PostgreSQL | Render PostgreSQL |
+| Setting  | Development                        | Production                     |
+| -------- | ---------------------------------- | ------------------------------ |
+| CORS     | `localhost:5173`, `localhost:3000` | `numeneon-frontend.vercel.app` |
+| DEBUG    | `True`                             | `False`                        |
+| Database | Local PostgreSQL                   | Render PostgreSQL              |

@@ -19,11 +19,14 @@ CORS_ALLOW_ALL_ORIGINS = True  # For development only
 ```python
 CORS_ALLOWED_ORIGINS = [
     'https://numeneon-frontend.vercel.app',
-    'http://localhost:5173',  # Vite dev server
-    'http://localhost:3000',  # React dev server
+    'https://numeneon-backend.onrender.com',
+    'http://localhost:5173',  # Vite dev server ✅ STILL WORKS
+    'http://localhost:3000',  # React dev server ✅ STILL WORKS
 ]
 CORS_ALLOW_CREDENTIALS = True
 ```
+
+> ⚠️ **TEAMMATES:** Local development STILL WORKS! `localhost:5173` and `localhost:3000` are included. You don't need to change anything locally.
 
 ---
 
@@ -43,11 +46,12 @@ CORS_ALLOW_CREDENTIALS = True
 
 ## Allowed Origins
 
-| Origin | Purpose |
-| ------ | ------- |
-| `https://numeneon-frontend.vercel.app` | Production frontend on Vercel |
-| `http://localhost:5173` | Local Vite dev server |
-| `http://localhost:3000` | Local React dev server (CRA) |
+| Origin                                  | Purpose                       |
+| --------------------------------------- | ----------------------------- |
+| `https://numeneon-frontend.vercel.app`  | Production frontend on Vercel |
+| `https://numeneon-backend.onrender.com` | Production backend on Render  |
+| `http://localhost:5173`                 | Local Vite dev server ✅      |
+| `http://localhost:3000`                 | Local React dev server ✅     |
 
 ---
 
