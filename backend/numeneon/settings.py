@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',      # Security headers (helmet in Express)
     'django.contrib.sessions.middleware.SessionMiddleware',  # Session handling (express-session)
     'django.middleware.common.CommonMiddleware',           # Common HTTP features
-    'django.middleware.csrf.CsrfViewMiddleware',           # CSRF protection (csurf in Express)
+    # 'django.middleware.csrf.CsrfViewMiddleware',         # DISABLED - using JWT, not cookies
     'django.contrib.auth.middleware.AuthenticationMiddleware',  # Attaches user to request
     'django.contrib.messages.middleware.MessageMiddleware',     # Flash messages
     'django.middleware.clickjacking.XFrameOptionsMiddleware',   # X-Frame-Options header
