@@ -20,7 +20,12 @@ SECRET_KEY = 'django-insecure-tl6jpad%y3%v%xria!-k=ez-=0h7wqz$ub=&a2*ka9veckq3p8
 # Debug mode - shows detailed errors (like NODE_ENV === 'development')
 DEBUG = True
 
-ALLOWED_HOSTS = []  # Whitelist of domains (like CORS origins)
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'numeneon-backend.onrender.com',
+    '.onrender.com',  # Allow all Render subdomains
+]
 
 # INSTALLED_APPS - Django apps/plugins (like Express middleware & route modules)
 # Add your custom apps here (e.g., 'api', 'users', 'posts')
