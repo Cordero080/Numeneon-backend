@@ -208,3 +208,50 @@ def current_user(request):
         'last_name': user.last_name,
         'profile': profile_data
     })
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def search_users(request):
+    """
+    Search for users by username, first_name, or last_name.
+    Returns up to 20 matching users (excludes current user).
+    
+    Query params:
+    - q: search query (minimum 2 characters)
+    
+    Example: GET /api/auth/search/?q=pablo
+    """
+    from django.db.models import Q
+    
+    query = request.GET.get('q', '').strip()
+    
+    # Require at least 2 characters to search
+    if len(query) < 2:
+        return Response([])
+    
+    # Search by username, first_name, or last_name (case-insensitive)
+    users = User.objects.filter(
+        Q(username__icontains=query) |
+        Q(first_name__icontains=query) |
+        Q(last_name__icontains=query)
+    ).exclude(id=request.user.id)[:20]  # Exclude self, limit to 20
+    
+    # Build response with profile data
+    results = []
+    for user in users:
+        user_data = {
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+        }
+        # Include avatar if profile exists
+        try:
+            if user.profile and user.profile.avatar:
+                user_data['avatar'] = user.profile.avatar
+        except Profile.DoesNotExist:
+            pass
+        results.append(user_data)
+    
+    return Response(results)

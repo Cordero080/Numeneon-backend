@@ -1,7 +1,7 @@
 # Numeneon API Endpoints
 
-> **Last Updated:** January 9, 2026  
-> **Total Endpoints:** 13
+> **Last Updated:** January 24, 2026  
+> **Total Endpoints:** 14
 > **Database:** PostgreSQL (migrated from SQLite Jan 6, 2026)
 
 ---
@@ -10,13 +10,13 @@
 
 | App         | Base Path       | Endpoints              |
 | ----------- | --------------- | ---------------------- |
-| **users**   | `/api/auth/`    | 4                      |
+| **users**   | `/api/auth/`    | 5                      |
 | **posts**   | `/api/posts/`   | 6 (via ViewSet router) |
 | **friends** | `/api/friends/` | 6                      |
 
 ---
 
-## Users App Endpoints (4)
+## Users App Endpoints (5)
 
 **Base URL:** `http://127.0.0.1:8000/api/auth/`
 
@@ -26,6 +26,7 @@
 | POST   | `/login/`         | `email_login()`    | Login with email/password, returns JWT |
 | POST   | `/token/refresh/` | `TokenRefreshView` | Refresh expired access token           |
 | GET    | `/me/`            | `current_user()`   | Get logged-in user's info              |
+| GET    | `/search/`        | `search_users()`   | Search users by name/username          |
 
 ### Request/Response Examples
 
@@ -88,6 +89,47 @@ Headers: Authorization: Bearer <access_token>
   "profile": { ... }
 }
 ```
+
+#### GET `/api/auth/search/`
+
+**Purpose:** Find users to add as friends. Searches by username, first_name, or last_name.
+
+```
+Headers: Authorization: Bearer <access_token>
+Query Params: ?q=<search_term>  (minimum 2 characters)
+```
+
+```json
+// Request: GET /api/auth/search/?q=tito
+
+// Response (200 OK)
+[
+  {
+    "id": 3,
+    "username": "tito",
+    "first_name": "Tito",
+    "last_name": ""
+  },
+  {
+    "id": 11,
+    "username": "titod",
+    "first_name": "Tito",
+    "last_name": "Del Valle",
+    "avatar": "https://..."
+  }
+]
+
+// If query < 2 chars or no matches:
+[]
+```
+
+**Notes:**
+
+- Requires authentication (JWT token)
+- Returns max 20 results
+- Excludes the current logged-in user from results
+- Case-insensitive search
+- Used by the SearchModal in frontend to find new people
 
 ---
 
