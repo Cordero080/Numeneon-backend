@@ -116,6 +116,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS - Allow React frontend to talk to Django
 CORS_ALLOWED_ORIGINS = [
     'https://numeneon-frontend.vercel.app',
+    'https://numeneon-backend.onrender.com',
     'http://localhost:5173',  # Vite dev server
     'http://localhost:3000',  # React dev server
 ]
