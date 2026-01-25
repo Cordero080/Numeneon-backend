@@ -4,6 +4,7 @@
 
 | File                                     | Purpose                                 |
 | ---------------------------------------- | --------------------------------------- |
+| [SETUP.md](SETUP.md)                     | Setup instructions & Friends API docs   |
 | [models-overview.md](models-overview.md) | All 6 models with fields, relationships |
 | [api-endpoints.md](api-endpoints.md)     | All 13 API endpoints                    |
 | [erd-prompt.md](erd-prompt.md)           | Prompt to generate ERD diagram          |
@@ -12,11 +13,11 @@
 
 ## Quick Stats
 
-| Metric            | Count                        |
-| ----------------- | ---------------------------- |
-| **Models**        | 6 (5 custom + 1 Django User) |
-| **API Endpoints** | 13                           |
-| **Django Apps**   | 3 (users, posts, friends)    |
+| Metric            | Count                                   |
+| ----------------- | --------------------------------------- |
+| **Models**        | 7 (6 custom + 1 Django User)            |
+| **API Endpoints** | 18                                      |
+| **Django Apps**   | 4 (users, posts, friends, messages_app) |
 
 ## Model Summary
 
@@ -36,8 +37,8 @@
       │
       │
       ▼
-┌─────────────────┐
-│  FriendRequest  │
-│    (friends)    │
-└─────────────────┘
+┌─────────────────┐     ┌─────────────────┐
+│  FriendRequest  │     │     Message     │
+│    (friends)    │     │ (messages_app)  │
+└─────────────────┘     └─────────────────┘
 ```

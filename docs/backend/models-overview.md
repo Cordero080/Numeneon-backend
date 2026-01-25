@@ -1,7 +1,7 @@
 # Numeneon Backend Models Overview
 
-> **Last Updated:** January 9, 2026  
-> **Total Models:** 6 (5 custom + 1 Django built-in)
+> **Last Updated:** January 24, 2026  
+> **Total Models:** 7 (6 custom + 1 Django built-in)
 > **Database:** PostgreSQL (migrated from SQLite Jan 6, 2026)
 
 ---
@@ -16,6 +16,7 @@
 | 4   | **Like**          | posts           | Colin   | Tracks user-post like relationships        |
 | 5   | **Friendship**    | friends         | Crystal | Bidirectional friend connections           |
 | 6   | **FriendRequest** | friends         | Crystal | Pending friend requests                    |
+| 7   | **Message**       | messages_app    | Pablo   | Direct messages between users              |
 
 ---
 
@@ -41,6 +42,7 @@
 - Has MANY `Like` (via Like.user)
 - Has MANY `Friendship` (via Friendship.user)
 - Has MANY `FriendRequest` (sent/received)
+- Has MANY `Message` (sent via sent_messages, received via received_messages)
 
 ---
 
@@ -286,6 +288,45 @@ user.received_requests.all()  # Requests sent TO this user
 
 ---
 
+## 7. Message
+
+**Location:** `backend/messages_app/models.py`  
+**Owner:** Pablo
+
+| Field        | Type             | Constraints   | Description               |
+| ------------ | ---------------- | ------------- | ------------------------- |
+| `id`         | AutoField        | PK            | Primary key               |
+| `sender`     | ForeignKey(User) | CASCADE       | User who sent the message |
+| `receiver`   | ForeignKey(User) | CASCADE       | User who receives message |
+| `content`    | TextField        | -             | Message text content      |
+| `is_read`    | BooleanField     | default=False | Whether message was read  |
+| `created_at` | DateTimeField    | auto_now_add  | Message sent timestamp    |
+
+**Relationships:**
+
+```
+User ──1:*── Message (as sender, via sent_messages)
+User ──1:*── Message (as receiver, via received_messages)
+```
+
+**Access Pattern:**
+
+```python
+user.sent_messages.all()      # Messages user sent
+user.received_messages.all()  # Messages user received
+message.sender                # Get sender user
+message.receiver              # Get receiver user
+```
+
+**Seed Command:**
+
+```bash
+python manage.py seed_messages         # Add sample messages
+python manage.py seed_messages --clear  # Clear and reseed
+```
+
+---
+
 ## Database Statistics
 
 | Table         | Est. Rows (Dev) | Growth Pattern                |
@@ -296,3 +337,4 @@ user.received_requests.all()  # Requests sent TO this user
 | Like          | ~100-200        | Grows with engagement         |
 | Friendship    | ~20-40          | Grows with connections        |
 | FriendRequest | ~5-10           | Transient (accepted/declined) |
+| Message       | ~20-50          | Grows with user messaging     |
