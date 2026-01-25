@@ -109,6 +109,7 @@ USE_TZ = True
 
 # Static files URL (like app.use('/static', express.static('public')))
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default ID field type for models (like MongoDB ObjectId or auto-increment in SQL)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
