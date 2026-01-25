@@ -78,17 +78,26 @@ TEMPLATES = [
 WSGI_APPLICATION = 'numeneon.wsgi.application'
 
 # DATABASE - Connection config
-# Using PostgreSQL (like pg + Pool in Express)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'numeneon',
-        'USER': '',  # Uses your macOS user by default
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
+import os
+import dj_database_url
+
+if os.environ.get('DATABASE_URL'):
+    # Production: use Render's DATABASE_URL
+    DATABASES = {
+        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    # Local development: use localhost PostgreSQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'numeneon',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 # Password validation rules (like bcrypt + validation middleware)
 # Relaxed for development - tighten for production!
