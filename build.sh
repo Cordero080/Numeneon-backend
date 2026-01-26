@@ -21,12 +21,22 @@ from django.contrib.auth.models import User
 from users.models import Profile
 
 team_users = [
+    # Core team members
     {'username': 'pabloPistola', 'email': 'pablo@test.com', 'password': 'test123', 'first_name': 'Pablo', 'last_name': 'Pistola'},
     {'username': 'natalia', 'email': 'natalia@test.com', 'password': 'test123', 'first_name': 'Natalia', 'last_name': 'Test'},
     {'username': 'crystal', 'email': 'crystal@test.com', 'password': 'test123', 'first_name': 'Crystal', 'last_name': 'Test'},
     {'username': 'colin', 'email': 'colin@test.com', 'password': 'test123', 'first_name': 'Colin', 'last_name': 'Test'},
     {'username': 'arthurb', 'email': 'arthur@test.com', 'password': 'test123', 'first_name': 'Arthur', 'last_name': 'Brown'},
     {'username': 'titod', 'email': 'tito@test.com', 'password': 'test123', 'first_name': 'Tito', 'last_name': 'Delgado'},
+    # Additional seed users
+    {'username': 'tito', 'email': 'tito2@test.com', 'password': 'test123', 'first_name': 'Tito', 'last_name': 'Original'},
+    {'username': 'alexr', 'email': 'alex@test.com', 'password': 'test123', 'first_name': 'Alex', 'last_name': 'Rodriguez'},
+    {'username': 'jordanl', 'email': 'jordan@test.com', 'password': 'test123', 'first_name': 'Jordan', 'last_name': 'Lee'},
+    {'username': 'samc', 'email': 'sam@test.com', 'password': 'test123', 'first_name': 'Sam', 'last_name': 'Chen'},
+    {'username': 'ASI', 'email': 'asi@test.com', 'password': 'test123', 'first_name': 'ASI', 'last_name': 'Bot'},
+    {'username': 'batman', 'email': 'batman@test.com', 'password': 'test123', 'first_name': 'Bruce', 'last_name': 'Wayne'},
+    {'username': 'superman', 'email': 'superman@test.com', 'password': 'test123', 'first_name': 'Clark', 'last_name': 'Kent'},
+    {'username': 'crying', 'email': 'crying@test.com', 'password': 'test123', 'first_name': 'Sad', 'last_name': 'User'},
 ]
 
 for u in team_users:
