@@ -10,4 +10,8 @@ gunicorn
 dj-database-url
 python-dotenv
 whitenoise
+# WebSocket support
+channels==4.0.0
+daphne==4.1.0
+channels-redis==4.2.0
 
