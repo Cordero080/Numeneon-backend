@@ -37,6 +37,9 @@ urlpatterns = [
 
     # Messages URLs
     path('api/messages/', include('messages_app.urls')),
+    
+    # MYSPACE
+    path('api/myspace/', include('myspace.urls')),
 ]
 
 # Serve media files in development

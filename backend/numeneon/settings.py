@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'friends',
     'messages_app',  # Direct messaging
     'notifications',
+    'myspace',
 ]
 
 # MIDDLEWARE - Request/response pipeline (exactly like Express app.use() chain)
@@ -136,13 +137,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     'https://numeneon-frontend.vercel.app',
     'https://numeneon-backend.onrender.com',
-    'http://localhost:5173',  # Vite dev server
-    'http://localhost:3000',  # React dev server
 ]
-# Allow Vercel preview deployments (random URLs like numeneon-frontend-abc123-user.vercel.app)
+# Allow any localhost port for development
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://numeneon-frontend.*\.vercel\.app$",
     r"^https://numeneon-frontend-.*\.vercel\.app$",
+    r"^http://localhost:\d+$",  # Any localhost port
+    r"^http://127\.0\.0\.1:\d+$",  # Any 127.0.0.1 port
 ]
 # JWT goes in Authorization header, not cookies - no credentials needed
 CORS_ALLOW_CREDENTIALS = False

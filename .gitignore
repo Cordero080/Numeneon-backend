@@ -9,7 +9,7 @@ __pycache__/
 # Database
 *.sqlite3
 
-# Environment
+# Environmentpip install daphne channels channels-redis
 .env
 .env.local
 

@@ -3,6 +3,7 @@
 ## Overview
 
 Build a MySpace-style music player for user profiles with:
+
 - **Profile Song** ("currently vibing to")
 - **Playlist Display** with playback controls
 - Songs stored in database, fetched from Spotify/Deezer API on frontend
@@ -23,6 +24,7 @@ python manage.py startapp myspace
 **File:** `backend/settings.py`
 
 Add to `INSTALLED_APPS`:
+
 ```python
 INSTALLED_APPS = [
     # ... existing apps
@@ -51,17 +53,17 @@ class MySpaceProfile(models.Model):
         on_delete=models.CASCADE,
         related_name='myspace_profile'
     )
-    
+
     # Profile song - the "currently vibing to" track
     profile_song_title = models.CharField(max_length=255, blank=True, null=True)
     profile_song_artist = models.CharField(max_length=255, blank=True, null=True)
     profile_song_external_id = models.CharField(max_length=100, blank=True, null=True)  # Spotify/Deezer ID
     profile_song_preview_url = models.URLField(blank=True, null=True)  # 30-sec preview URL
     profile_song_album_art = models.URLField(blank=True, null=True)  # Album cover image
-    
+
     # Optional: auto-play setting
     auto_play = models.BooleanField(default=False)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -83,7 +85,7 @@ class PlaylistSong(models.Model):
         on_delete=models.CASCADE,
         related_name='playlist_songs'
     )
-    
+
     # Song metadata (stored from API response)
     title = models.CharField(max_length=255)
     artist = models.CharField(max_length=255)
@@ -91,10 +93,10 @@ class PlaylistSong(models.Model):
     external_id = models.CharField(max_length=100)  # Spotify/Deezer track ID
     preview_url = models.URLField(blank=True, null=True)  # 30-sec preview
     album_art = models.URLField(blank=True, null=True)  # Album cover
-    
+
     # Playlist ordering
     order = models.PositiveIntegerField(default=0)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -104,7 +106,7 @@ class PlaylistSong(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.artist}"
-    
+
     @property
     def duration_formatted(self):
         """Return duration as M:SS or MM:SS string."""
@@ -127,7 +129,7 @@ from .models import MySpaceProfile, PlaylistSong
 
 class PlaylistSongSerializer(serializers.ModelSerializer):
     duration = serializers.CharField(source='duration_formatted', read_only=True)
-    
+
     class Meta:
         model = PlaylistSong
         fields = [
@@ -147,10 +149,10 @@ class PlaylistSongSerializer(serializers.ModelSerializer):
 class MySpaceProfileSerializer(serializers.ModelSerializer):
     playlist = PlaylistSongSerializer(source='playlist_songs', many=True, read_only=True)
     username = serializers.CharField(source='user.username', read_only=True)
-    
+
     # Profile song as nested object for cleaner frontend consumption
     profile_song = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = MySpaceProfile
         fields = [
@@ -168,7 +170,7 @@ class MySpaceProfileSerializer(serializers.ModelSerializer):
             'updated_at',
         ]
         read_only_fields = ['id', 'username', 'created_at', 'updated_at']
-    
+
     def get_profile_song(self, obj):
         """Return profile song as a structured object, or None."""
         if obj.profile_song_title:
@@ -238,7 +240,7 @@ def get_or_create_myspace_profile(user):
 def get_myspace_profile(request, username):
     """
     GET /api/myspace/<username>/
-    
+
     Get a user's MySpace profile with their playlist.
     Public endpoint - anyone can view.
     """
@@ -253,10 +255,10 @@ def get_myspace_profile(request, username):
 def update_myspace_settings(request):
     """
     PUT/PATCH /api/myspace/
-    
+
     Update the authenticated user's MySpace settings.
     Can update profile song and auto_play setting.
-    
+
     Request body example:
     {
         "title": "Song Name",
@@ -266,7 +268,7 @@ def update_myspace_settings(request):
         "album_art": "https://...",
         "auto_play": true
     }
-    
+
     To clear profile song, send null values:
     {
         "title": null,
@@ -275,10 +277,10 @@ def update_myspace_settings(request):
     """
     profile = get_or_create_myspace_profile(request.user)
     serializer = UpdateProfileSongSerializer(data=request.data)
-    
+
     if serializer.is_valid():
         data = serializer.validated_data
-        
+
         # Update profile song fields if provided
         if 'title' in data:
             profile.profile_song_title = data['title']
@@ -292,11 +294,11 @@ def update_myspace_settings(request):
             profile.profile_song_album_art = data['album_art']
         if 'auto_play' in data:
             profile.auto_play = data['auto_play']
-        
+
         profile.save()
-        
+
         return Response(MySpaceProfileSerializer(profile).data)
-    
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -305,9 +307,9 @@ def update_myspace_settings(request):
 def add_song_to_playlist(request):
     """
     POST /api/myspace/playlist/
-    
+
     Add a song to the authenticated user's playlist.
-    
+
     Request body:
     {
         "title": "Song Name",
@@ -320,22 +322,22 @@ def add_song_to_playlist(request):
     """
     profile = get_or_create_myspace_profile(request.user)
     serializer = AddSongToPlaylistSerializer(data=request.data)
-    
+
     if serializer.is_valid():
         data = serializer.validated_data
-        
+
         # Check if song already in playlist (by external_id)
         if profile.playlist_songs.filter(external_id=data['external_id']).exists():
             return Response(
                 {'error': 'Song already in playlist'},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
+
         # Get the next order number
         max_order = profile.playlist_songs.aggregate(
             max_order=models.Max('order')
         )['max_order'] or 0
-        
+
         song = PlaylistSong.objects.create(
             myspace_profile=profile,
             title=data['title'],
@@ -346,12 +348,12 @@ def add_song_to_playlist(request):
             album_art=data.get('album_art'),
             order=max_order + 1
         )
-        
+
         return Response(
             PlaylistSongSerializer(song).data,
             status=status.HTTP_201_CREATED
         )
-    
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -360,7 +362,7 @@ def add_song_to_playlist(request):
 def remove_song_from_playlist(request, song_id):
     """
     DELETE /api/myspace/playlist/<song_id>/
-    
+
     Remove a song from the authenticated user's playlist.
     """
     profile = get_or_create_myspace_profile(request.user)
@@ -374,9 +376,9 @@ def remove_song_from_playlist(request, song_id):
 def reorder_playlist(request):
     """
     PATCH /api/myspace/playlist/reorder/
-    
+
     Reorder songs in playlist.
-    
+
     Request body:
     {
         "song_ids": [3, 1, 2]  // New order of song IDs
@@ -384,21 +386,22 @@ def reorder_playlist(request):
     """
     profile = get_or_create_myspace_profile(request.user)
     song_ids = request.data.get('song_ids', [])
-    
+
     if not song_ids:
         return Response(
             {'error': 'song_ids required'},
             status=status.HTTP_400_BAD_REQUEST
         )
-    
+
     # Update order for each song
     for index, song_id in enumerate(song_ids):
         profile.playlist_songs.filter(id=song_id).update(order=index)
-    
+
     return Response(MySpaceProfileSerializer(profile).data)
 ```
 
 **Note:** Add this import at the top of views.py:
+
 ```python
 from django.db import models
 ```
@@ -416,10 +419,10 @@ from . import views
 urlpatterns = [
     # Get user's MySpace profile (public)
     path('<str:username>/', views.get_myspace_profile, name='myspace-profile'),
-    
+
     # Update own MySpace settings (authenticated)
     path('', views.update_myspace_settings, name='myspace-update'),
-    
+
     # Playlist management (authenticated)
     path('playlist/', views.add_song_to_playlist, name='playlist-add'),
     path('playlist/<int:song_id>/', views.remove_song_from_playlist, name='playlist-remove'),
@@ -434,6 +437,7 @@ urlpatterns = [
 **File:** `backend/urls.py`
 
 Add to urlpatterns:
+
 ```python
 from django.urls import path, include
 
@@ -488,19 +492,20 @@ python manage.py migrate
 
 ## 10. API Endpoints Summary
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `GET` | `/api/myspace/<username>/` | No | Get user's MySpace profile + playlist |
-| `PUT/PATCH` | `/api/myspace/` | Yes | Update own profile song & settings |
-| `POST` | `/api/myspace/playlist/` | Yes | Add song to playlist |
-| `DELETE` | `/api/myspace/playlist/<id>/` | Yes | Remove song from playlist |
-| `PATCH` | `/api/myspace/playlist/reorder/` | Yes | Reorder playlist songs |
+| Method      | Endpoint                         | Auth | Description                           |
+| ----------- | -------------------------------- | ---- | ------------------------------------- |
+| `GET`       | `/api/myspace/<username>/`       | No   | Get user's MySpace profile + playlist |
+| `PUT/PATCH` | `/api/myspace/`                  | Yes  | Update own profile song & settings    |
+| `POST`      | `/api/myspace/playlist/`         | Yes  | Add song to playlist                  |
+| `DELETE`    | `/api/myspace/playlist/<id>/`    | Yes  | Remove song from playlist             |
+| `PATCH`     | `/api/myspace/playlist/reorder/` | Yes  | Reorder playlist songs                |
 
 ---
 
 ## 11. Example API Responses
 
 ### GET /api/myspace/johndoe/
+
 ```json
 {
   "id": 1,
@@ -549,19 +554,21 @@ python manage.py migrate
 Your `MusicPlayer.jsx` component will need to:
 
 1. **Fetch profile on mount:**
+
    ```javascript
    GET /api/myspace/${username}/
    ```
 
 2. **Map API response to your track structure:**
+
    ```javascript
-   const tracks = response.playlist.map(song => ({
+   const tracks = response.playlist.map((song) => ({
      id: song.id,
      title: song.title,
      artist: song.artist,
      duration: song.duration,
      previewUrl: song.preview_url,
-     albumArt: song.album_art
+     albumArt: song.album_art,
    }));
    ```
 
@@ -594,7 +601,7 @@ Your `MusicPlayer.jsx` component will need to:
 Copy this to get help building the feature:
 
 ```
-I need to build a MySpace-style music feature for my Django backend. 
+I need to build a MySpace-style music feature for my Django backend.
 
 Here's the spec:
 - Django REST Framework backend
