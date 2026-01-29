@@ -12,6 +12,7 @@ from django.db import models
 from .models import MySpaceProfile, PlaylistSong
 from .serializers import (
     MySpaceProfileSerializer,
+    PublicMySpaceProfileSerializer,
     PlaylistSongSerializer,
     AddSongToPlaylistSerializer,
     UpdateProfileSongSerializer,
@@ -51,8 +52,8 @@ def get_myspace_profile(request, username):
     # Get or create their MySpace profile
     profile = get_or_create_myspace_profile(user)
     
-    # Convert Python object to JSON
-    serializer = MySpaceProfileSerializer(profile)
+    # Use PublicMySpaceProfileSerializer for frontend-expected format
+    serializer = PublicMySpaceProfileSerializer(profile)
     
     return Response(serializer.data)
 

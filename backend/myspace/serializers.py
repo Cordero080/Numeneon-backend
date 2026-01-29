@@ -29,6 +29,61 @@ class PlaylistSongSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 
+class PublicMySpaceProfileSerializer(serializers.ModelSerializer):
+    """
+    Public-facing serializer that matches the frontend's expected format.
+    Uses camelCase field names that the React app expects.
+    
+    GET /api/myspace/<username>/
+    """
+    # Profile song fields (camelCase for frontend)
+    songTitle = serializers.CharField(source='profile_song_title', read_only=True)
+    songArtist = serializers.CharField(source='profile_song_artist', read_only=True)
+    
+    # Profile customization fields (defaults for now)
+    mood = serializers.SerializerMethodField()
+    customBio = serializers.SerializerMethodField()
+    theme = serializers.SerializerMethodField()
+    wallpaper = serializers.SerializerMethodField()
+    sliderStyle = serializers.SerializerMethodField()
+    
+    # Playlist with full song data including preview_url
+    playlist = PlaylistSongSerializer(source='playlist_songs', many=True, read_only=True)
+    
+    class Meta:
+        model = MySpaceProfile
+        fields = [
+            'songTitle',
+            'songArtist', 
+            'mood',
+            'customBio',
+            'theme',
+            'wallpaper',
+            'sliderStyle',
+            'playlist',
+        ]
+    
+    def get_mood(self, obj):
+        """Return mood - placeholder for now"""
+        return "chillin"
+    
+    def get_customBio(self, obj):
+        """Return custom bio - placeholder for now"""
+        return ""
+    
+    def get_theme(self, obj):
+        """Return theme - placeholder for now"""
+        return "classic"
+    
+    def get_wallpaper(self, obj):
+        """Return wallpaper - placeholder for now"""
+        return "none"
+    
+    def get_sliderStyle(self, obj):
+        """Return slider style - placeholder for now"""
+        return 1
+
+
 class MySpaceProfileSerializer(serializers.ModelSerializer):
     # Nested serializer - includes entire playlist as array of song objects
     # source='playlist_songs' comes from related_name in PlaylistSong model
