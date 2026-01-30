@@ -28,6 +28,13 @@ ALLOWED_HOSTS = [
     '.vercel.app',  # Allow Vercel frontend for WebSocket connections
 ]
 
+# CSRF trusted origins for Django admin and form submissions
+CSRF_TRUSTED_ORIGINS = [
+    'https://numeneon-backend.onrender.com',
+    'https://*.onrender.com',
+    'https://*.vercel.app',
+]
+
 # INSTALLED_APPS - Django apps/plugins (like Express middleware & route modules)
 # Add your custom apps here (e.g., 'api', 'users', 'posts')
 INSTALLED_APPS = [
