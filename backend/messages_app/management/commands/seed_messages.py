@@ -27,6 +27,13 @@ class Command(BaseCommand):
             self.stdout.write(
                 self.style.WARNING(f'Cleared {deleted_count} existing messages')
             )
+        
+        # Skip seeding if messages already exist (unless --clear was used)
+        if not options['clear'] and Message.objects.exists():
+            self.stdout.write(
+                self.style.SUCCESS('Messages already exist, skipping seed. Use --clear to reset.')
+            )
+            return
 
         # Define all conversations as list of tuples
         # (sender_username, receiver_username, content, is_read)

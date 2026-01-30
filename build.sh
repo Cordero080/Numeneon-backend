@@ -53,7 +53,7 @@ for u in team_users:
 # Run seed scripts to populate sample data (standalone scripts, not manage.py commands)
 # seed_posts.py already clears existing posts before seeding
 python seed_posts.py || echo "seed_posts.py failed"
-# --clear flag removes existing messages before seeding to prevent duplicates
-python manage.py seed_messages --clear || echo "seed_messages not available or failed"
+# Seed messages ONLY if none exist (don't clear real user messages!)
+python manage.py seed_messages || echo "seed_messages not available or failed"
 # Seed MySpace profiles with music (--clear prevents duplicates on redeploy)
 python manage.py seed_myspace --clear || echo "seed_myspace not available or failed"
