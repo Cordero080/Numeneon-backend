@@ -25,11 +25,14 @@ def notify_user(user_id, notification_type, data):
     """
     try:
         channel_layer = get_channel_layer()
+        logger.info(f"notify_user called: user_id={user_id}, type={notification_type}, channel_layer={type(channel_layer)}")
+        
         if channel_layer is None:
             logger.warning("Channel layer is None, skipping notification")
             return
             
         group_name = f'user_{user_id}'
+        logger.info(f"Sending to group: {group_name}")
 
         # Send message to the user's group
         async_to_sync(channel_layer.group_send)(
@@ -39,8 +42,9 @@ def notify_user(user_id, notification_type, data):
                 'data': data
             }
         )
+        logger.info(f"Notification sent successfully to {group_name}")
     except Exception as e:
-        logger.error(f"Failed to send notification: {e}")
+        logger.error(f"Failed to send notification: {e}", exc_info=True)
         # Don't re-raise - notifications should not break the main request
 
 
