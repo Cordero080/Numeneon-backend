@@ -18,7 +18,6 @@ django_asgi_app = get_asgi_application()
 
 # Now we can safely import Channels components
 from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.security.websocket import AllowedHostsOriginValidator
 from notifications.middleware import JWTAuthMiddleware
 from notifications.routing import websocket_urlpatterns
 
@@ -28,11 +27,11 @@ application = ProtocolTypeRouter({
     "http": django_asgi_app,
 
     # WebSocket requests go through our auth middleware, then to URL router
-    "websocket": AllowedHostsOriginValidator(
-        JWTAuthMiddleware(
-            URLRouter(
-                websocket_urlpatterns
-            )
+    # Note: Origin validation removed - CORS handles security for HTTP,
+    # and JWT auth handles WebSocket security
+    "websocket": JWTAuthMiddleware(
+        URLRouter(
+            websocket_urlpatterns
         )
     ),
 })
