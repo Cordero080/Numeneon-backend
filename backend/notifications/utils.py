@@ -9,6 +9,9 @@ Usage in views:
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def notify_user(user_id, notification_type, data):
@@ -20,17 +23,25 @@ def notify_user(user_id, notification_type, data):
         notification_type: Type of notification (e.g., 'friend_request', 'new_message')
         data: Dictionary containing notification data
     """
-    channel_layer = get_channel_layer()
-    group_name = f'user_{user_id}'
+    try:
+        channel_layer = get_channel_layer()
+        if channel_layer is None:
+            logger.warning("Channel layer is None, skipping notification")
+            return
+            
+        group_name = f'user_{user_id}'
 
-    # Send message to the user's group
-    async_to_sync(channel_layer.group_send)(
-        group_name,
-        {
-            'type': notification_type.replace('-', '_'),
-            'data': data
-        }
-    )
+        # Send message to the user's group
+        async_to_sync(channel_layer.group_send)(
+            group_name,
+            {
+                'type': notification_type.replace('-', '_'),
+                'data': data
+            }
+        )
+    except Exception as e:
+        logger.error(f"Failed to send notification: {e}")
+        # Don't re-raise - notifications should not break the main request
 
 
 def notify_friend_request(to_user_id, from_user, request_id):
