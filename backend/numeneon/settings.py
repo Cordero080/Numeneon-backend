@@ -31,8 +31,9 @@ ALLOWED_HOSTS = [
 # CSRF trusted origins for Django admin and form submissions
 CSRF_TRUSTED_ORIGINS = [
     'https://numeneon-backend.onrender.com',
-    'https://*.onrender.com',
-    'https://*.vercel.app',
+    'http://numeneon-backend.onrender.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
 ]
 
 # INSTALLED_APPS - Django apps/plugins (like Express middleware & route modules)
