@@ -40,11 +40,17 @@ class PostViewSet(viewsets.ModelViewSet):
         post = serializer.save(author=self.request.user)
         
         # Notify all friends about the new post
-        friendships = Friendship.objects.filter(user=self.request.user)
-        post_data = PostSerializer(post).data
-        
-        for friendship in friendships:
-            notify_new_post(friendship.friend.id, post_data)
+        try:
+            friendships = Friendship.objects.filter(user=self.request.user)
+            post_data = PostSerializer(post, context={'request': self.request}).data
+            
+            for friendship in friendships:
+                notify_new_post(friendship.friend.id, post_data)
+        except Exception as e:
+            # Don't fail the post creation if notifications fail
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Failed to send post notifications: {e}")
 
     @action(detail=True, methods=["get"])
     def replies(self, request, pk=None):
