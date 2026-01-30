@@ -25,6 +25,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'numeneon-backend.onrender.com',
     '.onrender.com',  # Allow all Render subdomains
+    '.vercel.app',  # Allow Vercel frontend for WebSocket connections
 ]
 
 # INSTALLED_APPS - Django apps/plugins (like Express middleware & route modules)
