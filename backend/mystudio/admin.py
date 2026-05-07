@@ -2,12 +2,12 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import MySpaceProfile, PlaylistSong
+from .models import MyStudioProfile, PlaylistSong
 
 
 class PlaylistSongInline(admin.TabularInline):
     """
-    Shows playlist songs directly inside MySpaceProfile admin page.
+    Shows playlist songs directly inside MyStudioProfile admin page.
     Instead of navigating to separate page, you see songs as a table.
     """
     model = PlaylistSong
@@ -15,10 +15,10 @@ class PlaylistSongInline(admin.TabularInline):
     ordering = ['order']  # Sort by playlist order
 
 
-@admin.register(MySpaceProfile)
-class MySpaceProfileAdmin(admin.ModelAdmin):
+@admin.register(MyStudioProfile)
+class MyStudioProfileAdmin(admin.ModelAdmin):
     """
-    Admin interface for MySpace profiles.
+    Admin interface for MyStudio profiles.
     """
     # Columns shown in the list view
     list_display = ['user', 'profile_song_title', 'auto_play', 'created_at']

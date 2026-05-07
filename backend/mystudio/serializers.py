@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import MySpaceProfile, PlaylistSong
+from .models import MyStudioProfile, PlaylistSong
 from .deezer_utils import get_preview_url
 
 
@@ -45,12 +45,12 @@ class PlaylistSongSerializer(serializers.ModelSerializer):
         return obj.preview_url
 
 
-class PublicMySpaceProfileSerializer(serializers.ModelSerializer):
+class PublicMyStudioProfileSerializer(serializers.ModelSerializer):
     """
     Public-facing serializer that matches the frontend's expected format.
     Uses camelCase field names that the React app expects.
-    
-    GET /api/myspace/<username>/
+
+    GET /api/mystudio/<username>/
     """
     # Profile song fields (camelCase for frontend)
     songTitle = serializers.CharField(source='profile_song_title', read_only=True)
@@ -70,7 +70,7 @@ class PublicMySpaceProfileSerializer(serializers.ModelSerializer):
     playlist = PlaylistSongSerializer(source='playlist_songs', many=True, read_only=True)
 
     class Meta:
-        model = MySpaceProfile
+        model = MyStudioProfile
         fields = [
             'selectedAvatar',
             'songTitle',
@@ -104,7 +104,7 @@ class PublicMySpaceProfileSerializer(serializers.ModelSerializer):
         return 1
 
 
-class MySpaceProfileSerializer(serializers.ModelSerializer):
+class MyStudioProfileSerializer(serializers.ModelSerializer):
     # Nested serializer - includes entire playlist as array of song objects
     # source='playlist_songs' comes from related_name in PlaylistSong model
     # many=True means "expect multiple songs, not just one"
@@ -118,8 +118,8 @@ class MySpaceProfileSerializer(serializers.ModelSerializer):
     profile_song = serializers.SerializerMethodField()
 
     class Meta:
-        model = MySpaceProfile
-        
+        model = MyStudioProfile
+
         # All fields to include in JSON
         # Notice we include BOTH profile_song (nested object) AND individual fields
         # This gives frontend flexibility in how they access the data
@@ -145,7 +145,7 @@ class MySpaceProfileSerializer(serializers.ModelSerializer):
         Instead of returning 5 separate fields, packages them into one object.
         Returns None if no profile song set.
         
-        obj = the MySpaceProfile instance being serialized
+        obj = the MyStudioProfile instance being serialized
         """
         if obj.profile_song_title:
             return {

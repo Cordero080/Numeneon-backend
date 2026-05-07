@@ -2,19 +2,19 @@ from django.db import models
 from django.conf import settings
 
 
-class MySpaceProfile(models.Model):
+class MyStudioProfile(models.Model):
     """
-    Extends user profile with MySpace-specific settings.
+    Extends user profile with MyStudio-specific settings.
     One-to-one relationship with User.
     """
-    
+
     # ===== RELATIONSHIP =====
-    # Links this MySpace profile to a User (one profile per user)
-    # CASCADE means: if user is deleted, delete their MySpace profile too
+    # Links this MyStudio profile to a User (one profile per user)
+    # CASCADE means: if user is deleted, delete their MyStudio profile too
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='myspace_profile'
+        related_name='mystudio_profile'
     )
     # ===== AVATAR (FRONTEND CONTROLLED) =====
     # Stores avatar key, filename, or URL
@@ -43,27 +43,27 @@ class MySpaceProfile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'myspace_myspaceprofile'  # Keep existing table name
-        verbose_name = 'MySpace Profile'
-        verbose_name_plural = 'MySpace Profiles'
+        db_table = 'myspace_myspaceprofile'  # Keep existing table name (DB migration would be needed to change)
+        verbose_name = 'MyStudio Profile'
+        verbose_name_plural = 'MyStudio Profiles'
 
     def __str__(self):
         # How this object appears in admin and logs
-        return f"{self.user.username}'s MySpace"
+        return f"{self.user.username}'s MyStudio"
 
 
 class PlaylistSong(models.Model):
     """
-    Songs in a user's MySpace playlist.
+    Songs in a user's MyStudio playlist.
     Order field allows drag-and-drop reordering.
     """
-    
+
     # ===== RELATIONSHIP =====
-    # Which MySpace profile owns this song
+    # Which MyStudio profile owns this song
     # CASCADE: if profile deleted, delete all its songs
     # related_name='playlist_songs': lets you access songs via profile.playlist_songs.all()
     myspace_profile = models.ForeignKey(
-        MySpaceProfile,
+        MyStudioProfile,
         on_delete=models.CASCADE,
         related_name='playlist_songs'
     )

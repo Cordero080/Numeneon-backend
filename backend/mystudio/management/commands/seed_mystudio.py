@@ -1,12 +1,12 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from mystudio.models import MySpaceProfile, PlaylistSong
+from mystudio.models import MyStudioProfile, PlaylistSong
 
 User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = 'Seeds MySpace profiles with sample songs'
+    help = 'Seeds MyStudio profiles with sample songs'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -23,8 +23,8 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR('User pabloPistola not found'))
             return
 
-        # Get or create MySpace profile
-        profile, created = MySpaceProfile.objects.get_or_create(user=user)
+        # Get or create MyStudio profile
+        profile, created = MyStudioProfile.objects.get_or_create(user=user)
         
         if options['clear']:
             deleted = profile.playlist_songs.all().delete()[0]
@@ -74,7 +74,7 @@ class Command(BaseCommand):
                 self.stdout.write(f"  Exists: {song_data['title']} by {song_data['artist']}")
 
         self.stdout.write(self.style.SUCCESS(
-            f'\nSeeded {created_count} songs to {user.username} MySpace'
+            f'\nSeeded {created_count} songs to {user.username} MyStudio'
         ))
         
         # Show current playlist

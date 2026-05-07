@@ -10,10 +10,10 @@ from django.contrib.auth import get_user_model
 from django.db import models
 import requests
 
-from .models import MySpaceProfile, PlaylistSong
+from .models import MyStudioProfile, PlaylistSong
 from .serializers import (
-    MySpaceProfileSerializer,
-    PublicMySpaceProfileSerializer,
+    MyStudioProfileSerializer,
+    PublicMyStudioProfileSerializer,
     PlaylistSongSerializer,
     AddSongToPlaylistSerializer,
     UpdateProfileSongSerializer,
@@ -28,7 +28,7 @@ def get_or_create_mystudio_profile(user):
     Helper function: gets existing MyStudio profile or creates new one.
     Returns tuple: (profile_object, was_created_boolean)
     """
-    profile, created = MySpaceProfile.objects.get_or_create(user=user)
+    profile, created = MyStudioProfile.objects.get_or_create(user=user)
     return profile
 
 
@@ -41,7 +41,7 @@ def get_my_mystudio_profile(request):
     Get the current authenticated user's own MyStudio profile.
     """
     profile = get_or_create_mystudio_profile(request.user)
-    serializer = PublicMySpaceProfileSerializer(profile)
+    serializer = PublicMyStudioProfileSerializer(profile)
     return Response(serializer.data)
 
 
@@ -100,8 +100,8 @@ def get_mystudio_profile(request, username):
     # Get or create their MyStudio profile
     profile = get_or_create_mystudio_profile(user)
     
-    # Use PublicMySpaceProfileSerializer for frontend-expected format
-    serializer = PublicMySpaceProfileSerializer(profile)
+    # Use PublicMyStudioProfileSerializer for frontend-expected format
+    serializer = PublicMyStudioProfileSerializer(profile)
     
     return Response(serializer.data)
 
@@ -162,7 +162,7 @@ def update_mystudio_settings(request):
         profile.save()
 
         # Return updated profile as JSON
-        return Response(MySpaceProfileSerializer(profile).data)
+        return Response(MyStudioProfileSerializer(profile).data)
 
     # If validation failed, return errors with 400 status
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -298,4 +298,4 @@ def reorder_playlist(request):
         profile.playlist_songs.filter(id=song_id).update(order=index)
 
     # Return updated profile with reordered playlist
-    return Response(MySpaceProfileSerializer(profile).data)
+    return Response(MyStudioProfileSerializer(profile).data)
